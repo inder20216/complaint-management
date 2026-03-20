@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Facility Complaint Portal | Vishal Mega Mart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ══════════════════════════════════════
+       DESIGN TOKENS
+    ══════════════════════════════════════ */
+    :root {
+      --primary:        #6f5bd6;
+      --primary-dk:     #5848b8;
+      --primary-lt:     #ede9ff;
+      --primary-glow:   rgba(111,91,214,0.15);
+      --pink:           #ff007f;
+      --accent:         linear-gradient(135deg, #ff007f, #6f5bd6);
+
+      --bg:             #f0f2f8;
+      --surface:        #ffffff;
+      --surface2:       #f8f9fc;
+      --border:         #e4e7ef;
+      --border-focus:   #6f5bd6;
+
+      --text:           #1a1d2e;
+      --text-2:         #4b5168;
+      --text-3:         #8b91a8;
+
+      --success:        #10b981;
+      --success-lt:     #ecfdf5;
+      --success-border: #6ee7b7;
+      --warn:           #f59e0b;
+      --warn-lt:        #fffbeb;
+      --warn-border:    #fcd34d;
+      --danger:         #ef4444;
+      --danger-lt:      #fef2f2;
+      --info-lt:        #eff6ff;
+      --info-border:    #93c5fd;
+      --info-text:      #1d4ed8;
+
+      --radius-sm:      6px;
+      --radius:         12px;
+      --radius-lg:      18px;
+      --radius-xl:      24px;
+
+      --shadow-sm:      0 1px 4px rgba(0,0,0,0.06);
+      --shadow:         0 4px 20px rgba(0,0,0,0.08);
+      --shadow-lg:      0 12px 40px rgba(0,0,0,0.12);
+
+      --font:           'DM Sans', -apple-system, sans-serif;
+      --font-mono:      'DM Mono', monospace;
+
+      --header-h:       58px;
+      --footer-h:       72px;
+      --sidebar-w:      280px;
+    }
+
+    /* ══════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; font-size: 16px; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100%;
+      min-height: 100dvh;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ══════════════════════════════════════
+       LAYOUT — FULL PAGE SHELL
+    ══════════════════════════════════════ */
+    .app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    /* ── HEADER ── */
+    .app-header {
+      height: var(--header-h);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .app-header img { height: 28px; flex-shrink: 0; }
+
+    .header-divider {
+      width: 1px;
+      height: 28px;
+      background: var(--border);
+    }
+
+    .header-title { flex: 1; min-width: 0; }
+    .header-title h1 { font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .vmm-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+
+    .vmm-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      background: linear-gradient(135deg, #ff007f, #6f5bd6);
+      flex-shrink: 0;
+    }
+
+    .header-emp {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-lt);
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      display: none;
+    }
+    .header-emp.show { display: block; }
+
+    .header-logid {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-3);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+      display: none;
+    }
+    .header-logid.show { display: block; }
+
+    /* ── BODY LAYOUT ── */
+    .app-body {
+      flex: 1;
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0;
+    }
+
+    /* ── SIDEBAR (tablets+) ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      padding: 24px 16px;
+      display: none;
+      position: sticky;
+      top: var(--header-h);
+      height: calc(100vh - var(--header-h));
+      height: calc(100dvh - var(--header-h));
+      overflow-y: auto;
+    }
+
+    @media (min-width: 768px) {
+      .sidebar { display: block; }
+      .app-body { padding: 0 16px; }
+    }
+
+    .sidebar-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+      padding-left: 12px;
+    }
+
+    .sidebar-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      cursor: default;
+      margin-bottom: 2px;
+      transition: background 0.2s;
+    }
+
+    .sidebar-step.active {
+      background: var(--primary-lt);
+    }
+
+    .sidebar-step .ss-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-3);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.25s;
+    }
+    .sidebar-step.active .ss-num { background: var(--primary); color: white; }
+    .sidebar-step.done .ss-num { background: var(--success); color: white; }
+
+    .sidebar-step .ss-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      transition: color 0.2s;
+    }
+    .sidebar-step.active .ss-label { color: var(--primary); font-weight: 700; }
+    .sidebar-step.done .ss-label { color: var(--success); }
+
+    .sidebar-step .ss-sub {
+      font-size: 10px;
+      color: var(--text-3);
+      line-height: 1.3;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 768px) {
+      .main-content { padding: 24px 0; }
+    }
+
+    /* ── TOP PROGRESS BAR (mobile only) ── */
+    .mobile-progress {
+      display: block;
+      background: var(--surface);
+      padding: 12px 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    @media (min-width: 768px) { .mobile-progress { display: none; } }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .progress-label { font-size: 12px; font-weight: 600; color: var(--primary); }
+    .progress-count { font-size: 11px; color: var(--text-3); font-family: var(--font-mono); }
+
+    .progress-bar-track {
+      width: 100%;
+      height: 3px;
+      background: var(--border);
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff007f, #6f5bd6);
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── STEP CARD ── */
+    .step-card {
+      display: none;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: slideUp 0.22s ease;
+      margin: 0 12px;
+    }
+
+    .step-card.active { display: flex; flex-direction: column; }
+
+    @media (min-width: 768px) {
+      .step-card { margin: 0; border-radius: var(--radius-xl); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Step card inner sections */
+    .step-head {
+      padding: 18px 18px 0;
+    }
+    @media (min-width: 480px) { .step-head { padding: 22px 24px 0; } }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-lt);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    .step-head h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1.25;
+    }
+    @media (min-width: 480px) { .step-head h2 { font-size: 22px; } }
+
+    .step-head .hi {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-3);
+      margin-bottom: 6px;
+    }
+
+    /* ── INSTRUCTION BOX ── */
+    .instruction-box {
+      margin: 14px 18px 0;
+      background: var(--info-lt);
+      border: 1px solid var(--info-border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+    }
+    @media (min-width: 480px) { .instruction-box { margin: 14px 24px 0; } }
+
+    .instruction-box .ib-head {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--info-text);
+      margin-bottom: 6px;
+    }
+
+    .instruction-box ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .instruction-box li {
+      font-size: 12px;
+      color: #374151;
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+    }
+
+    .instruction-box li .li-icon { flex-shrink: 0; margin-top: 1px; }
+
+    /* ── STEP BODY ── */
+    .step-body {
+      padding: 18px;
+      flex: 1;
+    }
+    @media (min-width: 480px) { .step-body { padding: 22px 24px; } }
+
+    /* ── STEP FOOTER / NAV ── */
+    .step-nav {
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: var(--surface2);
+      flex-wrap: wrap;
+    }
+    @media (min-width: 480px) { .step-nav { padding: 16px 24px; } }
+
+    .btn-back {
+      padding: 10px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-2);
+      background: var(--surface);
+      cursor: pointer;
+      transition: all 0.18s;
+      flex-shrink: 0;
+    }
+    .btn-back:hover { border-color: var(--primary); color: var(--primary); }
+
+    .btn-next {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, #7c68e0, #6f5bd6);
+      cursor: pointer;
+      transition: all 0.18s;
+      box-shadow: 0 4px 14px rgba(111,91,214,0.35);
+      white-space: nowrap;
+    }
+    .btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(111,91,214,0.45); }
+    .btn-next:active { transform: translateY(0); }
+    .btn-next:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-next.danger-btn { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 14px rgba(239,68,68,0.35); }
+
+    /* ══════════════════════════════════════
+       FORM COMPONENTS
+    ══════════════════════════════════════ */
+    .form-group { margin-bottom: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    @media (max-width: 420px) { .form-row { grid-template-columns: 1fr; } }
+    .form-row .form-group { margin-bottom: 0; }
+
+    label.fl {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text-2);
+      margin-bottom: 6px;
+    }
+    label.fl .req { color: var(--danger); margin-left: 2px; }
+    label.fl .opt { color: var(--text-3); font-weight: 400; margin-left: 4px; }
+
+    .field {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface);
+      transition: border-color 0.18s, box-shadow 0.18s;
+      -webkit-appearance: none;
+    }
+    .field:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+    .field.has-error {
+      border-color: var(--danger);
+      background: var(--danger-lt);
+    }
+    .field.has-error:focus { box-shadow: 0 0 0 3px rgba(239,68,68,0.12); }
+
+    textarea.field { resize: vertical; min-height: 90px; }
+
+    .err-msg {
+      font-size: 11px;
+      color: var(--danger);
+      margin-top: 4px;
+      display: none;
+    }
+    .err-msg.show { display: block; }
+
+    /* ── ALERT ── */
+    .alert-box {
+      background: var(--danger-lt);
+      border: 1px solid #fca5a5;
+      color: #b91c1c;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+    .alert-box.show { display: block; }
+
+    /* ── OPTION CARDS ── */
+    .opt-grid {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr;
+    }
+    .opt-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .opt-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    @media (max-width: 480px) {
+      .opt-grid.cols-2 { grid-template-columns: 1fr; }
+      .opt-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 340px) {
+      .opt-grid.cols-3 { grid-template-columns: 1fr; }
+    }
+
+    .opt-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.18s;
+      background: var(--surface);
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .opt-card:hover { border-color: var(--primary); background: var(--primary-lt); }
+    .opt-card.sel { border-color: var(--primary); background: var(--primary-lt); box-shadow: 0 0 0 3px var(--primary-glow); }
+
+    .opt-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-3);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      transition: all 0.18s;
+      font-family: var(--font-mono);
+    }
+    .opt-card.sel .opt-num { background: var(--primary); color: white; }
+
+    .opt-text { flex: 1; min-width: 0; }
+    .opt-title { font-size: 13px; font-weight: 600; display: block; color: var(--text); margin-bottom: 2px; }
+    .opt-sub   { font-size: 11px; color: var(--text-3); }
+    .opt-card.sel .opt-title { color: var(--primary); }
+
+    /* ── REVIEW GRID ── */
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 400px) { .review-grid { grid-template-columns: 1fr; } }
+
+    .review-item { }
+    .review-item .ri-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); margin-bottom: 3px; }
+    .review-item .ri-val { font-size: 13px; font-weight: 600; color: var(--text); }
+
+    .info-panel {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    /* ── PHOTO UPLOAD ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 380px) { .photo-grid { grid-template-columns: 1fr 1fr; } }
+
+    .photo-slot label.fl { font-size: 11px; margin-bottom: 5px; }
+
+    .upload-zone {
+      position: relative;
+      aspect-ratio: 1;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      overflow: hidden;
+      background: var(--surface2);
+    }
+    .upload-zone input[type=file] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .upload-zone:hover, .upload-zone.filled { border-color: var(--primary); background: var(--primary-lt); }
+    .upload-zone .uz-icon { font-size: 22px; margin-bottom: 4px; }
+    .upload-zone .uz-label { font-size: 10px; font-weight: 600; color: var(--text-3); text-align: center; padding: 0 4px; }
+    .upload-zone .uz-preview {
+      position: absolute;
+      inset: 0;
+      object-fit: cover;
+      display: none;
+      pointer-events: none;
+    }
+    .upload-zone.filled .uz-preview { display: block; }
+    .upload-zone.filled .uz-icon, .upload-zone.filled .uz-label { display: none; }
+    .upload-zone .uz-check {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 20px;
+      height: 20px;
+      background: var(--success);
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: white;
+    }
+    .upload-zone.filled .uz-check { display: flex; }
+
+    /* ── SUMMARY TABLE ── */
+    .summary-table { width: 100%; border-collapse: collapse; }
+    .summary-table tr { border-bottom: 1px solid var(--border); }
+    .summary-table tr:last-child { border-bottom: none; }
+    .summary-table td { padding: 10px 4px; font-size: 13px; vertical-align: top; }
+    .summary-table td:first-child { color: var(--text-3); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; width: 42%; }
+    .summary-table td:last-child { font-weight: 600; color: var(--text); }
+
+    /* ── PHOTO PREVIEW ROW ── */
+    .photo-thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .photo-thumbs img { width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+
+    /* ── SUCCESS SCREEN ── */
+    .success-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--success-lt);
+      border: 2px solid var(--success-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin: 0 auto 18px;
+    }
+
+    .ticket-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-lt);
+      border: 1px solid #c4b5fd;
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      margin: 8px auto;
+    }
+    .ticket-chip .tc-label { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
+    .ticket-chip .tc-val { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text); }
+
+    /* ── SPINNER ── */
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 7px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── WARN PANEL ── */
+    .warn-panel {
+      background: var(--warn-lt);
+      border: 1px solid var(--warn-border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #92400e;
+      margin-top: 8px;
+    }
+
+    /* ── FOOTER ── */
+    .app-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="app-header">
+    <img src="https://raw.githubusercontent.com/inder20216/openmind-assets/main/logo.png" alt="Open Mind">
+    <div class="header-divider"></div>
+    <div class="header-title">
+      <h1>Facility Complaint Portal</h1>
+      <div class="vmm-badge"><div class="vmm-dot"></div>Vishal Mega Mart</div>
+    </div>
+    <div class="header-logid" id="headerLogId"></div>
+    <div class="header-emp" id="headerEmp"></div>
+  </header>
+
+  <!-- ═══ BODY ═══ -->
+  <div class="app-body">
+
+    <!-- Sidebar (tablets+) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-title">Steps</div>
+      <!-- built by JS -->
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+
+      <!-- Mobile progress bar -->
+      <div class="mobile-progress" id="mobileProgress">
+        <div class="progress-row">
+          <span class="progress-label" id="mProgressLabel">Step 1 of 11 — Verify Employee</span>
+          <span class="progress-count" id="mProgressCount">1/11</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="mProgressFill" style="width:10%"></div>
+        </div>
+      </div>
+
+      <!-- ─── STEP 1: VERIFY ─── -->
+      <div class="step-card" id="step1">
+        <div class="step-head">
+          <div class="step-badge">📱 Step 1 of 11</div>
+          <h2>Verify Employee</h2>
+          <span class="hi">कर्मचारी सत्यापन</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Enter the <strong>10-digit mobile number</strong> registered with Vishal Mega Mart HR.</li>
+            <li><span class="li-icon">→</span>Your name, store details, and employee code will be fetched automatically.</li>
+            <li><span class="li-icon">→</span>If verification fails, contact helpdesk at <strong>9711772722</strong>.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="form-group">
+            <label class="fl">Mobile Number <span class="req">*</span></label>
+            <input class="field" type="tel" id="mobileInput" placeholder="Enter 10-digit mobile number" maxlength="10" inputmode="numeric"
+              onkeyup="if(event.key==='Enter') verifyEmployee()">
+            <div class="err-msg" id="mobileErr">Please enter a valid 10-digit mobile number.</div>
+          </div>
+          <div class="alert-box" id="verifyErr">
+            ❌ We could not verify your details. Please contact support at <strong>9711772722</strong> or email <strong>vmm.helpdesk@openmind.in</strong>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-next" id="verifyBtn" onclick="verifyEmployee()">Verify &amp; Continue →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 3: COMPLAINT TYPE ─── -->
+      <div class="step-card" id="step3">
+        <div class="step-head">
+          <div class="step-badge">📋 Step 3 of 11</div>
+          <h2>Select Complaint Type</h2>
+          <span class="hi">शिकायत का प्रकार चुनें</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Select the <strong>type of complaint</strong> you want to raise.</li>
+            <li><span class="li-icon">→</span><strong>Rodent Damage</strong> — Choose this if the issue is caused by rodent activity.</li>
+            <li><span class="li-icon">→</span><strong>Other Complaints (Facility)</strong> — Choose this for all other facility or equipment related issues.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="opt-grid" id="mainComplaintTypeGrid">
+            <div class="opt-card" data-v="Rodent Damage" onclick="selOpt(this,'mainComplaintTypeGrid','mainComplaintType')">
+              <div class="opt-num">A</div>
+              <div class="opt-text"><span class="opt-title">Rodent Damage</span><span class="opt-sub">कीट / चूहे से नुकसान · Damage caused by rodent activity</span></div>
+            </div>
+            <div class="opt-card" data-v="Other Complaints (Facility)" onclick="selOpt(this,'mainComplaintTypeGrid','mainComplaintType')">
+              <div class="opt-num">B</div>
+              <div class="opt-text"><span class="opt-title">Other Complaints (Facility)</span><span class="opt-sub">अन्य शिकायत · Equipment / facility related issues</span></div>
+            </div>
+          </div>
+          <div class="alert-box" id="mctErr">Please select a complaint type to continue.</div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(2)">← Back</button>
+          <button class="btn-next" onclick="confirmMainComplaintType()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 2: EMPLOYEE DETAILS ─── -->
+      <div class="step-card" id="step2">
+        <div class="step-head">
+          <div class="step-badge">✅ Step 2 of 11</div>
+          <h2>Confirm Your Details</h2>
+          <span class="hi">अपनी जानकारी की पुष्टि करें</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Review the details fetched from our system. <strong>Do not proceed if details are incorrect.</strong></li>
+            <li><span class="li-icon">→</span>If your name, store, or code is wrong, go back and try a different number, or call <strong>9711772722</strong>.</li>
+            <li><span class="li-icon">→</span>Click <strong>Confirm & Continue</strong> only if all details are correct.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="info-panel review-grid" id="empGrid">
+            <div class="review-item"><div class="ri-label">Employee Name</div><div class="ri-val" id="rv_name">—</div></div>
+            <div class="review-item"><div class="ri-label">Employee Code</div><div class="ri-val" id="rv_code">—</div></div>
+            <div class="review-item"><div class="ri-label">Email</div><div class="ri-val" id="rv_email" style="word-break:break-all;">—</div></div>
+            <div class="review-item"><div class="ri-label">Mobile</div><div class="ri-val" id="rv_phone">—</div></div>
+            <div class="review-item"><div class="ri-label">Store Code</div><div class="ri-val" id="rv_scode">—</div></div>
+            <div class="review-item"><div class="ri-label">Store Name</div><div class="ri-val" id="rv_sname">—</div></div>
+            <div class="review-item"><div class="ri-label">City</div><div class="ri-val" id="rv_scity">—</div></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(1)">← Back</button>
+          <button class="btn-next" onclick="goTo(3)">Confirm &amp; Continue →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 4: CATEGORY ─── -->
+      <div class="step-card" id="step4">
+        <div class="step-head">
+          <div class="step-badge">📦 Step 4 of 11</div>
+          <h2>Select Category</h2>
+          <span class="hi">Product की Category चुनें</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Select the <strong>category</strong> of the product or asset that has a problem.</li>
+            <li><span class="li-icon">→</span>Example: If your Fan or LED Lights or Air Curtain is not working, select <strong>Electrical</strong>.</li>
+            <li><span class="li-icon">→</span>If you are unsure — Watch the video <a href="https://www.youtube.com/watch?v=XItuh1Nlz7w" target="_blank" rel="noopener" style="color:var(--info-text);font-weight:600;">"Know the categories"</a> to learn more.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="opt-grid" id="categoryGrid"></div>
+          <div class="alert-box" id="catErr">Please select a category to continue.</div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(3)">← Back</button>
+          <button class="btn-next" onclick="confirmCategory()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 5: PRODUCT ─── -->
+      <div class="step-card" id="step5">
+        <div class="step-head">
+          <div class="step-badge">🔧 Step 5 of 11</div>
+          <h2>Select Product</h2>
+          <span class="hi">Product चुनें</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Select the <strong>specific product</strong> that has the issue from the list.</li>
+            <li><span class="li-icon">→</span>The list shows products under your selected category: <strong id="catNameInStep4">—</strong></li>
+            <li><span class="li-icon">→</span>If you selected the wrong category, click <strong>← Back</strong> to change it.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="opt-grid cols-2" id="productGrid"></div>
+          <div class="alert-box" id="prodErr">Please select a product to continue.</div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(4)">← Category</button>
+          <button class="btn-next" onclick="confirmProduct()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 6: COMPLAINT TYPE ─── -->
+      <div class="step-card" id="step6">
+        <div class="step-head">
+          <div class="step-badge">⚠️ Step 6 of 11</div>
+          <h2>Nature of Complaint</h2>
+          <span class="hi">शिकायत का प्रकार चुनें</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Select what type of problem you are facing with <strong id="prodNameInStep5">the product</strong>.</li>
+            <li><span class="li-icon">→</span><strong>Not Working</strong> — Device is completely dead or not powering on.</li>
+            <li><span class="li-icon">→</span><strong>Servicing Required</strong> — Device works but needs routine maintenance.</li>
+            <li><span class="li-icon">→</span><strong>Requirement/Installation</strong> — New equipment needed or existing needs replacement.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="opt-grid" id="complaintTypeGrid">
+            <div class="opt-card" data-v="Not Working" onclick="selOpt(this,'complaintTypeGrid','complaintType')">
+              <div class="opt-num">1</div>
+              <div class="opt-text"><span class="opt-title">Not Working</span><span class="opt-sub">काम नहीं कर रहा · Device is completely dead</span></div>
+            </div>
+            <div class="opt-card" data-v="Not Maintaining Proper Temperature" onclick="selOpt(this,'complaintTypeGrid','complaintType')">
+              <div class="opt-num">2</div>
+              <div class="opt-text"><span class="opt-title">Not Maintaining Proper Temperature</span><span class="opt-sub">सही तापमान नहीं · For refrigeration / AC units</span></div>
+            </div>
+            <div class="opt-card" data-v="Servicing & Maintenance Required" onclick="selOpt(this,'complaintTypeGrid','complaintType')">
+              <div class="opt-num">3</div>
+              <div class="opt-text"><span class="opt-title">Servicing &amp; Maintenance Required</span><span class="opt-sub">सर्विसिंग चाहिए · Regular upkeep needed</span></div>
+            </div>
+            <div class="opt-card" data-v="Part Not Working" onclick="selOpt(this,'complaintTypeGrid','complaintType')">
+              <div class="opt-num">4</div>
+              <div class="opt-text"><span class="opt-title">Part Not Working</span><span class="opt-sub">पार्ट खराब है · A specific component has failed</span></div>
+            </div>
+            <div class="opt-card" data-v="Repair Required" onclick="selOpt(this,'complaintTypeGrid','complaintType')">
+              <div class="opt-num">5</div>
+              <div class="opt-text"><span class="opt-title">Repair Required</span><span class="opt-sub">मरम्मत चाहिए · Physical damage / needs fixing</span></div>
+            </div>
+            <div class="opt-card" data-v="Requirement / Installation / Replacement" onclick="selOpt(this,'complaintTypeGrid','complaintType')">
+              <div class="opt-num">6</div>
+              <div class="opt-text"><span class="opt-title">Requirement / Installation / Replacement</span><span class="opt-sub">नई जरूरत / रिप्लेसमेंट · New unit needed</span></div>
+            </div>
+          </div>
+          <div class="alert-box" id="ctErr">Please select a complaint type.</div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(5)">← Product</button>
+          <button class="btn-next" onclick="confirmComplaintType()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 7: WARRANTY ─── -->
+      <div class="step-card" id="step7">
+        <div class="step-head">
+          <div class="step-badge">🛡️ Step 7 of 11</div>
+          <h2>Warranty / AMC Status</h2>
+          <span class="hi">वारंटी / AMC की स्थिति</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span><strong>Under Warranty</strong> — Product is still within the manufacturer's warranty period.</li>
+            <li><span class="li-icon">→</span><strong>Under AMC</strong> — An Annual Maintenance Contract is active for this product.</li>
+            <li><span class="li-icon">→</span><strong>Not Applicable</strong> — Warranty/AMC has expired or never existed. <em>(If unsure, pick this.)</em></li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="opt-grid cols-3" id="warrantyGrid">
+            <div class="opt-card" data-v="Under Warranty" onclick="selOpt(this,'warrantyGrid','warrantyStatus')">
+              <div class="opt-num">1</div>
+              <div class="opt-text"><span class="opt-title">Under Warranty</span><span class="opt-sub">वारंटी में है</span></div>
+            </div>
+            <div class="opt-card" data-v="Under AMC" onclick="selOpt(this,'warrantyGrid','warrantyStatus')">
+              <div class="opt-num">2</div>
+              <div class="opt-text"><span class="opt-title">Under AMC</span><span class="opt-sub">AMC में है</span></div>
+            </div>
+            <div class="opt-card" data-v="Not Applicable" onclick="selOpt(this,'warrantyGrid','warrantyStatus')">
+              <div class="opt-num">3</div>
+              <div class="opt-text"><span class="opt-title">Not Applicable</span><span class="opt-sub">लागू नहीं</span></div>
+            </div>
+          </div>
+          <div class="warn-panel">💡 Not sure? Select <strong>Not Applicable</strong> — our team will verify during inspection.</div>
+          <div class="alert-box" id="wErr">Please select warranty status.</div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(6)">← Complaint Type</button>
+          <button class="btn-next" onclick="confirmWarranty()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 8: VENDOR ─── -->
+      <div class="step-card" id="step8">
+        <div class="step-head">
+          <div class="step-badge">🏭 Step 8 of 11</div>
+          <h2>Brand / Vendor Name</h2>
+          <span class="hi">ब्रांड या AMC Vendor का नाम</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Enter the <strong>brand name</strong> of the product (e.g., LG, Samsung, Voltas, Daikin).</li>
+            <li><span class="li-icon">→</span>If the product is under AMC, enter the <strong>vendor/company name</strong> (e.g., BlueStar Services, Carrier AMC).</li>
+            <li><span class="li-icon">→</span>If you don't know, type <strong>NA</strong>.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="form-group">
+            <label class="fl">Brand / AMC Vendor Name <span class="req">*</span></label>
+            <input class="field" type="text" id="vendorInput" placeholder="e.g., LG, Samsung, Voltas, BlueStar Services, NA"
+              onkeyup="if(event.key==='Enter') confirmVendor()">
+            <div class="err-msg" id="vendorErr">Please enter a brand or vendor name (or type NA).</div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(7)">← Warranty</button>
+          <button class="btn-next" onclick="confirmVendor()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 9: LOCATION ─── -->
+      <div class="step-card" id="step9">
+        <div class="step-head">
+          <div class="step-badge">📍 Step 9 of 11</div>
+          <h2>Product Location</h2>
+          <span class="hi">Product की store में जगह</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Describe <strong>exactly where</strong> the product/asset is located inside your store.</li>
+            <li><span class="li-icon">→</span>Good examples: <em>"Dairy section, near Gate 2"</em>, <em>"First floor cold storage room"</em>, <em>"Main entrance escalator"</em>.</li>
+            <li><span class="li-icon">→</span>Be specific so the service team can find it without calling you.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="form-group">
+            <label class="fl">Location Inside Store <span class="req">*</span></label>
+            <input class="field" type="text" id="locationInput"
+              placeholder="e.g., Dairy Section near Gate 2, Ground Floor, Cold Storage Room"
+              onkeyup="if(event.key==='Enter') confirmLocation()">
+            <div class="err-msg" id="locErr">Please describe the location (at least 3 characters).</div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(8)">← Vendor</button>
+          <button class="btn-next" onclick="confirmLocation()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 10: PHOTOS ─── -->
+      <div class="step-card" id="step10">
+        <div class="step-head">
+          <div class="step-badge">📷 Step 10 of 11</div>
+          <h2>Upload Photos</h2>
+          <span class="hi">फ़ोटो अपलोड करें</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span><strong>Photo 1 is required.</strong> Photos 2 and 3 are optional but highly recommended.</li>
+            <li><span class="li-icon">→</span>Take a clear photo of the <strong>damaged/faulty area</strong> of the product.</li>
+            <li><span class="li-icon">→</span>On mobile: tap the slot to open your camera directly and take a live photo.</li>
+            <li><span class="li-icon">→</span>Accepted formats: JPG, PNG. Keep each photo under 10MB.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="photo-grid">
+            <div class="photo-slot">
+              <label class="fl">Photo 1 <span class="req">*</span></label>
+              <div class="upload-zone" id="uz1">
+                <input type="file" accept="image/*" capture="environment" id="ph1" onchange="handlePhoto(this,1)">
+                <div class="uz-icon">📷</div>
+                <div class="uz-label">Tap to capture</div>
+                <img class="uz-preview" id="prev1" alt="">
+                <div class="uz-check">✓</div>
+              </div>
+            </div>
+            <div class="photo-slot">
+              <label class="fl">Photo 2 <span class="opt">(optional)</span></label>
+              <div class="upload-zone" id="uz2">
+                <input type="file" accept="image/*" capture="environment" id="ph2" onchange="handlePhoto(this,2)">
+                <div class="uz-icon">📷</div>
+                <div class="uz-label">Tap to capture</div>
+                <img class="uz-preview" id="prev2" alt="">
+                <div class="uz-check">✓</div>
+              </div>
+            </div>
+            <div class="photo-slot">
+              <label class="fl">Photo 3 <span class="opt">(optional)</span></label>
+              <div class="upload-zone" id="uz3">
+                <input type="file" accept="image/*" capture="environment" id="ph3" onchange="handlePhoto(this,3)">
+                <div class="uz-icon">📷</div>
+                <div class="uz-label">Tap to capture</div>
+                <img class="uz-preview" id="prev3" alt="">
+                <div class="uz-check">✓</div>
+              </div>
+            </div>
+          </div>
+          <div class="alert-box" id="photoErr">At least 1 photo is required. Please capture or upload Photo 1.</div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(9)">← Location</button>
+          <button class="btn-next" onclick="confirmPhotos()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 11: REMARKS ─── -->
+      <div class="step-card" id="step11">
+        <div class="step-head">
+          <div class="step-badge">📝 Step 11 of 11</div>
+          <h2>Describe the Issue</h2>
+          <span class="hi">समस्या का विस्तृत विवरण</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Write a <strong>clear, detailed description</strong> of the issue — the more detail, the faster we can resolve it.</li>
+            <li><span class="li-icon">→</span>Include: <strong>What is wrong?</strong> · <strong>Since when?</strong> · <strong>How often?</strong> · <strong>Any unusual sounds/smells?</strong></li>
+            <li><span class="li-icon">→</span>Minimum 10 characters required. Avoid vague entries like "not working" without context.</li>
+            <li><span class="li-icon">→</span>Example: <em>"AC in dairy section not cooling since yesterday morning. Making loud clicking sound when switched on. Temperature staying at 28°C instead of 18°C."</em></li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="form-group">
+            <label class="fl">Complaint Details <span class="req">*</span></label>
+            <textarea class="field" id="remarksInput" rows="5"
+              placeholder="Describe the problem in detail...&#10;समस्या का पूरा विवरण यहाँ लिखें..."></textarea>
+            <div class="err-msg" id="rmkErr">Please enter at least 10 characters describing the issue.</div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(10)">← Photos</button>
+          <button class="btn-next" onclick="confirmRemarks()">Review &amp; Submit →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 12: REVIEW ─── -->
+      <div class="step-card" id="step12">
+        <div class="step-head">
+          <div class="step-badge">🔍 Final Review</div>
+          <h2>Review &amp; Submit</h2>
+          <span class="hi">समीक्षा करें और सबमिट करें</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Check all details carefully before submitting. <strong>Once submitted, the ticket cannot be edited.</strong></li>
+            <li><span class="li-icon">→</span>If anything is wrong, click the <strong>← Edit</strong> button to go back.</li>
+            <li><span class="li-icon">→</span>Click <strong>Submit Complaint</strong> to log your ticket and receive a Ticket ID.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="info-panel">
+            <table class="summary-table" id="summaryTable"></table>
+          </div>
+          <div class="photo-thumbs" id="photoThumbs"></div>
+          <div class="alert-box" id="submitErr">❌ Submission failed. Please check your connection and try again, or contact 9711772722.</div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(11)">← Edit Remarks</button>
+          <button class="btn-next" id="submitBtn" onclick="submitComplaint()">Submit Complaint →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 13: SUCCESS ─── -->
+      <div class="step-card" id="step13">
+        <div class="step-body" style="text-align:center; padding: 40px 24px;">
+          <div class="success-ring">✅</div>
+          <h2 style="font-size:22px; margin-bottom:8px;">Complaint Submitted!</h2>
+          <p style="color:var(--text-2); font-size:14px; margin-bottom:20px;">
+            शिकायत सफलतापूर्वक दर्ज की गई।<br>Your team will be notified shortly.
+          </p>
+          <div class="ticket-chip">
+            <div class="tc-label">Ticket ID</div>
+            <div class="tc-val" id="ticketDisplay">—</div>
+          </div>
+          <p style="font-size:12px; color:var(--text-3); margin-top:16px; margin-bottom:28px;">
+            Keep this ticket ID for reference. You will receive a confirmation on your registered email / mobile.
+          </p>
+          <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn-next" style="flex:unset; padding:12px 22px;" onclick="submitAnother()">Submit Another Complaint</button>
+            <button class="btn-back" onclick="logoutUser()">Change Employee</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- /app-body -->
+
+  <footer class="app-footer">
+    Official use only — Vishal Mega Mart registered employees. Powered by <strong>Open Mind Services Limited</strong>.
+  </footer>
+</div><!-- /app -->
+
+<script>
+// ═══════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════
+const VERIFY_WEBHOOK      = 'https://automation.openmindhelpline.com/webhook/fetch-user';
+const SUBMIT_WEBHOOK      = 'https://inder20216.app.n8n.cloud/webhook/vmm-facility-complaint';
+const CATEGORIES_WEBHOOK  = 'https://automation.openmindhelpline.com/webhook/categories';
+const PRODUCTS_WEBHOOK    = 'https://automation.openmindhelpline.com/webhook/products';
+const NATURE_WEBHOOK      = 'https://automation.openmindhelpline.com/webhook/nature';
+
+let dynamicProducts          = null; // category list from categories webhook
+let fetchedProductsForCategory = null; // product list from products webhook for selected category
+
+// ═══════════════════════════════════════════════
+//  PRODUCT DATA
+// ═══════════════════════════════════════════════
+const PRODUCTS = {
+  "AC / HVAC":          ["Split AC","Cassette AC","Window AC","Duct AC","Chiller Unit","AHU","FCU","Cooling Tower"],
+  "Refrigeration":      ["Visi Cooler","Deep Freezer","Reach-in Freezer","Island Freezer","Walk-in Cooler","Walk-in Freezer","Display Refrigerator","Ice Machine"],
+  "Electrical":         ["MCB / DB Panel","Transformer","UPS / Inverter","DG Set","Power Socket","Wiring / Cabling","Energy Meter","Earthing Issue"],
+  "Lighting":           ["LED Light","Tube Light","Spotlight","Flood Light","Emergency Light","Signage Light","Street Light","Motion Sensor Light"],
+  "CCTV / Security":    ["CCTV Camera","DVR / NVR","Security Monitor","Access Control","Biometric Machine","Security Alarm","Metal Detector","Baggage Scanner"],
+  "Fire Safety":        ["Fire Extinguisher","Sprinkler System","Smoke Detector","Fire Alarm Panel","Fire Hydrant","Hose Reel","PA System"],
+  "Plumbing / Civil":   ["Water Pump","Pipeline Leak","Drainage Blockage","Washroom Fitting","Water Tank","RO/Water Purifier","False Ceiling","Flooring Issue"],
+  "IT / Network":       ["Desktop / Computer","Printer","Barcode Scanner","POS Terminal","Network Switch","WiFi Router","Server","UPS for IT"],
+  "Furniture / Fixtures":["Shelving / Rack","Checkout Counter","Display Stand","Storage Cabinet","Trolley","Basket","Chair / Table","Locker"],
+  "Lift / Escalator":   ["Passenger Lift","Goods Lift","Escalator","Travelator","Lift Control Panel"]
+};
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+const S = {
+  step: 1,
+  logId: '',
+  mobile: '', employee: {}, store: {},
+  mainComplaintType: '',
+  category: '', product: '',
+  complaintType: '', warrantyStatus: '',
+  vendorName: '', location: '', remarks: ''
+};
+
+function generateLogId() {
+  const now  = new Date();
+  const date = now.getFullYear().toString()
+             + String(now.getMonth() + 1).padStart(2, '0')
+             + String(now.getDate()).padStart(2, '0');
+  const rand = Math.random().toString(36).substring(2, 7).toUpperCase();
+  return `VMM-${date}-${rand}`;
+}
+
+const STEPS = [
+  null,
+  { n:'Verify',          sub:'Enter mobile number' },
+  { n:'Employee',        sub:'Confirm your details' },
+  { n:'Complaint Type',  sub:'Rodent or Facility?' },
+  { n:'Category',        sub:'Select product type' },
+  { n:'Product',         sub:'Select specific item' },
+  { n:'Complaint',       sub:'Nature of issue' },
+  { n:'Warranty',        sub:'AMC/Warranty status' },
+  { n:'Vendor',          sub:'Brand or vendor name' },
+  { n:'Location',        sub:'Where in the store?' },
+  { n:'Photos',          sub:'Upload images' },
+  { n:'Remarks',         sub:'Describe the problem' },
+  { n:'Review',          sub:'Check & submit' },
+];
+
+// ═══════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════
+function goTo(n) {
+  document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  S.step = n;
+  updateSidebar();
+  updateMobileProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = '<div class="sidebar-title">Your Progress</div>';
+  for (let i = 1; i <= 12; i++) {
+    const info = STEPS[i];
+    if (!info) continue;
+    const div = document.createElement('div');
+    div.className = 'sidebar-step' + (i === S.step ? ' active' : i < S.step ? ' done' : '');
+    div.innerHTML = `
+      <div class="ss-num">${i < S.step ? '✓' : i}</div>
+      <div>
+        <div class="ss-label">${info.n}</div>
+        <div class="ss-sub">${info.sub}</div>
+      </div>`;
+    sidebar.appendChild(div);
+  }
+}
+
+function updateMobileProgress() {
+  const total = 11;
+  const cur = Math.min(S.step, 12);
+  const pct = Math.round((cur / (total + 1)) * 100);
+  const info = STEPS[Math.min(S.step, 12)];
+  document.getElementById('mProgressLabel').textContent = `Step ${Math.min(S.step,12)} — ${info ? info.n : 'Done'}`;
+  document.getElementById('mProgressCount').textContent = `${Math.min(S.step,12)}/${total+1}`;
+  document.getElementById('mProgressFill').style.width = pct + '%';
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 1 — VERIFY
+// ═══════════════════════════════════════════════
+async function verifyEmployee() {
+  const mobile = document.getElementById('mobileInput').value.trim();
+  const mErr   = document.getElementById('mobileErr');
+  const vErr   = document.getElementById('verifyErr');
+  const btn    = document.getElementById('verifyBtn');
+
+  mErr.classList.remove('show'); vErr.classList.remove('show');
+
+  if (!/^\d{10}$/.test(mobile)) {
+    mErr.classList.add('show');
+    document.getElementById('mobileInput').classList.add('has-error');
+    return;
+  }
+  document.getElementById('mobileInput').classList.remove('has-error');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Verifying...';
+
+  try {
+    S.logId = generateLogId();
+
+    const res  = await fetch(VERIFY_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: mobile, logId: S.logId })
+    });
+    const raw  = await res.json();
+    const data = Array.isArray(raw) ? raw[0] : raw;  // unwrap array if needed
+
+    if (data.success === true) {
+      S.mobile   = mobile;
+      S.employee = data.employee || {};
+      S.store    = data.store    || {};
+
+      const set = (id, v) => document.getElementById(id).textContent = v || '—';
+      set('rv_name',  data.employee.name);
+      set('rv_code',  data.employee.code);
+      set('rv_email', data.employee.email);
+      set('rv_phone', data.employee.phone || mobile);
+      set('rv_scode', data.store.code);
+      set('rv_sname', data.store.name);
+      set('rv_scity', data.store.city);
+
+      const empLabel = data.employee.name || mobile;
+      document.getElementById('headerEmp').textContent = '👤 ' + empLabel;
+      document.getElementById('headerEmp').classList.add('show');
+
+      document.getElementById('headerLogId').textContent = S.logId;
+      document.getElementById('headerLogId').classList.add('show');
+
+      goTo(2);
+    } else {
+      throw new Error('not found');
+    }
+  } catch(e) {
+    vErr.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Verify &amp; Continue →';
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 2 — MAIN COMPLAINT TYPE
+// ═══════════════════════════════════════════════
+function normalizeCategories(data) {
+  // Unwrap single-item array wrapper if present
+  const d = (Array.isArray(data) && data.length === 1) ? data[0] : data;
+
+  // Format A: { success, categories: [{ number, name }, ...], total }  — API format
+  if (d && d.categories && Array.isArray(d.categories)) {
+    const out = {};
+    d.categories.forEach(item => { out[item.name] = []; });
+    return out;
+  }
+  // Format B: { "Cat": ["prod1", "prod2"], ... }  — matches PRODUCTS shape directly
+  if (d && !Array.isArray(d) && typeof d === 'object') {
+    return d;
+  }
+  // Format C: [{ category: "Cat", products: [...] }, ...]
+  if (Array.isArray(d) && d.length && d[0].category !== undefined) {
+    const out = {};
+    d.forEach(item => { out[item.category] = item.products || []; });
+    return out;
+  }
+  // Format D: ["Cat1", "Cat2", ...] — just names
+  if (Array.isArray(d) && d.length && typeof d[0] === 'string') {
+    const out = {};
+    d.forEach(cat => { out[cat] = []; });
+    return out;
+  }
+  return null;
+}
+
+async function confirmMainComplaintType() {
+  const err = document.getElementById('mctErr');
+  err.classList.remove('show');
+
+  if (!S.mainComplaintType) {
+    err.textContent = 'Please select a complaint type to continue.';
+    err.classList.add('show');
+    return;
+  }
+
+  if (S.mainComplaintType === 'Other Complaints (Facility)') {
+    const btn = document.querySelector('#step3 .btn-next');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Loading categories...';
+
+    try {
+      const res  = await fetch(CATEGORIES_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'Other Complaints (Facility)', logId: S.logId })
+      });
+      if (!res.ok) throw new Error('http ' + res.status);
+      const data = await res.json();
+      const normalized = normalizeCategories(data);
+      dynamicProducts = normalized || PRODUCTS;
+    } catch (e) {
+      btn.disabled = false;
+      btn.innerHTML = 'Next →';
+      err.textContent = '❌ Failed to load categories. Please check your connection and try again.';
+      err.classList.add('show');
+      return;
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = 'Next →';
+  } else {
+    // Rodent Damage — use fallback hardcoded data
+    dynamicProducts = null;
+  }
+
+  buildCategories();
+  goTo(4);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 4 — CATEGORY
+// ═══════════════════════════════════════════════
+function buildCategories() {
+  const source = dynamicProducts || PRODUCTS;
+  const g = document.getElementById('categoryGrid');
+  g.innerHTML = '';
+  Object.keys(source).forEach((cat, i) => {
+    const d = document.createElement('div');
+    d.className = 'opt-card';
+    d.dataset.v = cat;
+    d.innerHTML = `<div class="opt-num">${i+1}</div><div class="opt-text"><span class="opt-title">${cat}</span></div>`;
+    d.onclick = () => selOpt(d, 'categoryGrid', 'category');
+    g.appendChild(d);
+  });
+}
+
+async function confirmCategory() {
+  const err = document.getElementById('catErr');
+  err.classList.remove('show');
+
+  if (!S.category) {
+    err.textContent = 'Please select a category to continue.';
+    err.classList.add('show');
+    return;
+  }
+
+  const btn = document.querySelector('#step4 .btn-next');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Loading products...';
+
+  try {
+    const res = await fetch(PRODUCTS_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ categoryName: S.category, logId: S.logId })
+    });
+    if (!res.ok) throw new Error('http ' + res.status);
+    const data = await res.json();
+
+    if (data.success && Array.isArray(data.products)) {
+      fetchedProductsForCategory = data.products; // [{ number, name }, ...]
+    } else {
+      fetchedProductsForCategory = null;
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.innerHTML = 'Next →';
+    err.textContent = '❌ Failed to load products. Please check your connection and try again.';
+    err.classList.add('show');
+    return;
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = 'Next →';
+  buildProducts();
+  goTo(5);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 5 — PRODUCT
+// ═══════════════════════════════════════════════
+function buildProducts() {
+  const g = document.getElementById('productGrid');
+  g.innerHTML = '';
+  document.getElementById('catNameInStep4').textContent = S.category;
+
+  let productList = [];
+  if (fetchedProductsForCategory && fetchedProductsForCategory.length) {
+    // API response: [{ number, name }, ...]
+    productList = fetchedProductsForCategory.map(p => p.name || String(p));
+  } else {
+    // Fallback to hardcoded PRODUCTS
+    const source = dynamicProducts || PRODUCTS;
+    productList = source[S.category] || [];
+  }
+
+  productList.forEach((p, i) => {
+    const d = document.createElement('div');
+    d.className = 'opt-card';
+    d.dataset.v = p;
+    d.innerHTML = `<div class="opt-num">${i+1}</div><div class="opt-text"><span class="opt-title">${p}</span></div>`;
+    d.onclick = () => selOpt(d, 'productGrid', 'product');
+    g.appendChild(d);
+  });
+}
+
+async function confirmProduct() {
+  const err = document.getElementById('prodErr');
+  err.classList.remove('show');
+
+  if (!S.product) {
+    err.textContent = 'Please select a product to continue.';
+    err.classList.add('show');
+    return;
+  }
+
+  const btn = document.querySelector('#step5 .btn-next');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Loading complaint types...';
+
+  try {
+    const res = await fetch(NATURE_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ logId: S.logId, product: S.product })
+    });
+    if (!res.ok) throw new Error('http ' + res.status);
+    const data = await res.json();
+
+    if (data.success && Array.isArray(data.complaintTypes)) {
+      buildComplaintTypes(data.complaintTypes);
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.innerHTML = 'Next →';
+    err.textContent = '❌ Failed to load complaint types. Please try again.';
+    err.classList.add('show');
+    return;
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = 'Next →';
+  document.getElementById('prodNameInStep5').textContent = S.product;
+  goTo(6);
+}
+
+function buildComplaintTypes(types) {
+  const g = document.getElementById('complaintTypeGrid');
+  g.innerHTML = '';
+  types.forEach((t, i) => {
+    const d = document.createElement('div');
+    d.className = 'opt-card';
+    d.dataset.v = t.name;
+    d.innerHTML = `<div class="opt-num">${i + 1}</div>
+      <div class="opt-text"><span class="opt-title">${t.name}</span></div>`;
+    d.onclick = () => selOpt(d, 'complaintTypeGrid', 'complaintType');
+    g.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 6 — COMPLAINT TYPE
+// ═══════════════════════════════════════════════
+function confirmComplaintType() {
+  const err = document.getElementById('ctErr');
+  if (!S.complaintType) { err.classList.add('show'); return; }
+  err.classList.remove('show');
+  goTo(7);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 7 — WARRANTY
+// ═══════════════════════════════════════════════
+function confirmWarranty() {
+  const err = document.getElementById('wErr');
+  if (!S.warrantyStatus) { err.classList.add('show'); return; }
+  err.classList.remove('show');
+  goTo(8);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 8 — VENDOR
+// ═══════════════════════════════════════════════
+function confirmVendor() {
+  const val = document.getElementById('vendorInput').value.trim();
+  const err = document.getElementById('vendorErr');
+  const fld = document.getElementById('vendorInput');
+  if (!val) { err.classList.add('show'); fld.classList.add('has-error'); return; }
+  err.classList.remove('show'); fld.classList.remove('has-error');
+  S.vendorName = val;
+  goTo(9);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 9 — LOCATION
+// ═══════════════════════════════════════════════
+function confirmLocation() {
+  const val = document.getElementById('locationInput').value.trim();
+  const err = document.getElementById('locErr');
+  const fld = document.getElementById('locationInput');
+  if (!val || val.length < 3) { err.classList.add('show'); fld.classList.add('has-error'); return; }
+  err.classList.remove('show'); fld.classList.remove('has-error');
+  S.location = val;
+  goTo(10);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 10 — PHOTOS
+// ═══════════════════════════════════════════════
+function handlePhoto(input, n) {
+  const uz = document.getElementById('uz' + n);
+  const prev = document.getElementById('prev' + n);
+  if (input.files && input.files[0]) {
+    const url = URL.createObjectURL(input.files[0]);
+    prev.src = url;
+    uz.classList.add('filled');
+  } else {
+    uz.classList.remove('filled');
+    prev.src = '';
+  }
+}
+
+function confirmPhotos() {
+  const err = document.getElementById('photoErr');
+  const ph1 = document.getElementById('ph1');
+  if (!ph1.files || !ph1.files[0]) { err.classList.add('show'); return; }
+  err.classList.remove('show');
+  goTo(11);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 11 — REMARKS
+// ═══════════════════════════════════════════════
+function confirmRemarks() {
+  const val = document.getElementById('remarksInput').value.trim();
+  const err = document.getElementById('rmkErr');
+  const fld = document.getElementById('remarksInput');
+  if (!val || val.length < 10) { err.classList.add('show'); fld.classList.add('has-error'); return; }
+  err.classList.remove('show'); fld.classList.remove('has-error');
+  S.remarks = val;
+  buildSummary();
+  goTo(12);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 12 — REVIEW
+// ═══════════════════════════════════════════════
+function buildSummary() {
+  const rows = [
+    ['Employee',              S.employee.name  || '—'],
+    ['Code',                  S.employee.code  || '—'],
+    ['Store',                 (S.store.name || '—') + ' (' + (S.store.code || '—') + ')'],
+    ['City',                  S.store.city     || '—'],
+    ['Complaint Category',    S.mainComplaintType],
+    ['Category',              S.category],
+    ['Product',               S.product],
+    ['Complaint Type',        S.complaintType],
+    ['Warranty Status',       S.warrantyStatus],
+    ['Brand / Vendor',        S.vendorName],
+    ['Location',              S.location],
+    ['Remarks',               S.remarks],
+  ];
+  document.getElementById('summaryTable').innerHTML =
+    rows.map(([k,v]) => `<tr><td>${k}</td><td>${esc(v)}</td></tr>`).join('');
+
+  // photo thumbs
+  const thumbs = document.getElementById('photoThumbs');
+  thumbs.innerHTML = '';
+  [1,2,3].forEach(i => {
+    const inp = document.getElementById('ph' + i);
+    if (inp && inp.files && inp.files[0]) {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(inp.files[0]);
+      thumbs.appendChild(img);
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  SUBMIT  [DEMO MODE — webhook disabled]
+// ═══════════════════════════════════════════════
+async function submitComplaint() {
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Submitting...';
+
+  // Simulate network delay
+  await new Promise(r => setTimeout(r, 1500));
+
+  // Generate a demo ticket ID
+  const demoTicketId = 'VMM-DEMO-' + Math.random().toString(36).substring(2,7).toUpperCase();
+  document.getElementById('ticketDisplay').textContent = demoTicketId;
+
+  btn.disabled = false;
+  btn.innerHTML = 'Submit Complaint →';
+  goTo(13);
+}
+
+// ═══════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════
+function selOpt(el, gridId, key) {
+  document.querySelectorAll('#' + gridId + ' .opt-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  S[key] = el.dataset.v;
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function submitAnother() {
+  ['mainComplaintType','category','product','complaintType','warrantyStatus','vendorName','location','remarks'].forEach(k => S[k] = '');
+  dynamicProducts = null;
+  fetchedProductsForCategory = null;
+  document.getElementById('vendorInput').value = '';
+  document.getElementById('locationInput').value = '';
+  document.getElementById('remarksInput').value = '';
+  [1,2,3].forEach(i => {
+    const inp = document.getElementById('ph' + i);
+    if (inp) inp.value = '';
+    const uz = document.getElementById('uz' + i);
+    if (uz) uz.classList.remove('filled');
+    const pr = document.getElementById('prev' + i);
+    if (pr) pr.src = '';
+  });
+  document.querySelectorAll('.opt-card').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('.alert-box').forEach(a => a.classList.remove('show'));
+  goTo(2);
+}
+
+function logoutUser() { location.reload(); }
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  buildCategories();
+  goTo(1);
+});
+</script>
+</body>
+</html>
