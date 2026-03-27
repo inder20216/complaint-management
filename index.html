@@ -1348,6 +1348,34 @@ const BRAND_SEARCH_LIST = [...new Set([
 // tracks whether user clicked "None of the above"
 let vendorNoneSelected = false;
 
+// ─── PRODUCT → WARRANTY VENDOR MAPPING ───
+// Keys are lowercase product names (matched case-insensitively against S.product)
+// If a product is not listed here, all WARRANTY_VENDORS are shown as fallback
+const PRODUCT_VENDORS = {
+  "ac":                        ["Blue Star", "Carrier", "Hitachi", "Mitsubishi"],
+  "air curtain":               ["Euronics", "Mitzvah"],
+  "amplifier":                 ["Ahuja", "Arihant Infocoom"],
+  "drainage":                  ["Adtech"],
+  "electrical panel":          ["Neptune", "Western Control And Automation"],
+  "escalator":                 ["Ece", "Kone"],
+  "fly catcher":               ["Mitzvah"],
+  "genset":                    ["Kirloskar"],
+  "led light":                 ["Hublit", "Viewon"],
+  "lift":                      ["Ece", "Fuji Tech", "Johnson", "Kone", "Omega", "Otis Elevator", "Schindler", "Tk Elevator"],
+  "mic":                       ["Ahuja", "Arihant Infocoom"],
+  "safe lock":                 ["Godrej", "Gunnebo"],
+  "sensormatic":               ["Adtech"],
+  "server room ac":            ["Blue Star", "Carrier", "Hitachi", "Mitsubishi"],
+  "servo":                     ["Consul Neowatt", "Krykard Atandra", "Jindal Electric"],
+  "shampoo dispenser machine": ["Pie Industries"],
+  "track light":               ["Hublit", "Viewon"],
+};
+
+function getVendorsForProduct(productName) {
+  const key = (productName || '').trim().toLowerCase();
+  return PRODUCT_VENDORS[key] || WARRANTY_VENDORS; // show all if product not in map
+}
+
 // ═══════════════════════════════════════════════
 //  PRODUCT DATA
 // ═══════════════════════════════════════════════
@@ -1753,10 +1781,12 @@ function buildVendorStep() {
     textSection.style.display = 'none';
     document.getElementById('customVendorWrap').style.display = 'none';
     document.getElementById('vendorGridErr').classList.remove('show');
+    const productVendors = getVendorsForProduct(S.product);
+    const productLabel   = S.product || 'the product';
     instrList.innerHTML = `
-      <li><span class="li-icon">→</span>Select the <strong>brand/manufacturer</strong> of the product from the list below.</li>
-      <li><span class="li-icon">→</span>If your brand is not in the list, select <strong>"None of the above"</strong> and type it manually.</li>
-      <li><span class="li-icon">→</span>You can search by typing a few letters — e.g. <em>"Sam"</em> will show <em>Samsung</em>.</li>`;
+      <li><span class="li-icon">→</span>Select the <strong>brand/manufacturer</strong> of <strong>${productLabel}</strong> from the list below.</li>
+      <li><span class="li-icon">→</span>If your brand is not listed, select <strong>"None of the above"</strong> and type it manually.</li>
+      <li><span class="li-icon">→</span>${productVendors.length} brand(s) available for this product. Search by typing a few letters.</li>`;
     buildVendorGrid();
   } else {
     gridSection.style.display = 'none';
@@ -1775,10 +1805,11 @@ function buildVendorStep() {
 function buildVendorGrid() {
   const g = document.getElementById('vendorGrid');
   g.innerHTML = '';
-  // clear any previously selected state
   vendorNoneSelected = false;
 
-  WARRANTY_VENDORS.forEach((v, i) => {
+  const vendors = getVendorsForProduct(S.product);
+
+  vendors.forEach((v, i) => {
     const d = document.createElement('div');
     d.className = 'opt-card';
     d.dataset.v = v;
