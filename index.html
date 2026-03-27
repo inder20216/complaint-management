@@ -11,49 +11,46 @@
        DESIGN TOKENS
     ══════════════════════════════════════ */
     :root {
-      --primary:        #6f5bd6;
-      --primary-dk:     #5848b8;
-      --primary-lt:     #ede9ff;
-      --primary-glow:   rgba(111,91,214,0.15);
-      --pink:           #ff007f;
-      --accent:         linear-gradient(135deg, #ff007f, #6f5bd6);
+      --primary:        #2563eb;
+      --primary-dk:     #1d4ed8;
+      --primary-lt:     #eff6ff;
+      --primary-glow:   rgba(37,99,235,0.14);
 
-      --bg:             #f0f2f8;
+      --bg:             #f1f5f9;
       --surface:        #ffffff;
-      --surface2:       #f8f9fc;
-      --border:         #e4e7ef;
-      --border-focus:   #6f5bd6;
+      --surface2:       #f8fafc;
+      --border:         #e2e8f0;
+      --border-focus:   #2563eb;
 
-      --text:           #1a1d2e;
-      --text-2:         #4b5168;
-      --text-3:         #8b91a8;
+      --text:           #0f172a;
+      --text-2:         #475569;
+      --text-3:         #94a3b8;
 
-      --success:        #10b981;
-      --success-lt:     #ecfdf5;
-      --success-border: #6ee7b7;
-      --warn:           #f59e0b;
+      --success:        #16a34a;
+      --success-lt:     #f0fdf4;
+      --success-border: #86efac;
+      --warn:           #d97706;
       --warn-lt:        #fffbeb;
       --warn-border:    #fcd34d;
-      --danger:         #ef4444;
+      --danger:         #dc2626;
       --danger-lt:      #fef2f2;
-      --info-lt:        #eff6ff;
-      --info-border:    #93c5fd;
-      --info-text:      #1d4ed8;
+      --info-lt:        #f0f9ff;
+      --info-border:    #bae6fd;
+      --info-text:      #0369a1;
 
       --radius-sm:      6px;
       --radius:         12px;
-      --radius-lg:      18px;
-      --radius-xl:      24px;
+      --radius-lg:      16px;
+      --radius-xl:      20px;
 
-      --shadow-sm:      0 1px 4px rgba(0,0,0,0.06);
-      --shadow:         0 4px 20px rgba(0,0,0,0.08);
-      --shadow-lg:      0 12px 40px rgba(0,0,0,0.12);
+      --shadow-sm:      0 1px 3px rgba(0,0,0,0.06);
+      --shadow:         0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-lg:      0 12px 40px rgba(0,0,0,0.14);
 
       --font:           'DM Sans', -apple-system, sans-serif;
       --font-mono:      'DM Mono', monospace;
 
-      --header-h:       58px;
-      --footer-h:       72px;
+      --header-h:       62px;
       --sidebar-w:      280px;
     }
 
@@ -74,7 +71,7 @@
     }
 
     /* ══════════════════════════════════════
-       LAYOUT — FULL PAGE SHELL
+       APP SHELL
     ══════════════════════════════════════ */
     .app {
       display: flex;
@@ -86,8 +83,7 @@
     /* ── HEADER ── */
     .app-header {
       height: var(--header-h);
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
       display: flex;
       align-items: center;
       padding: 0 16px;
@@ -95,56 +91,71 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
     }
 
-    .app-header img { height: 28px; flex-shrink: 0; }
+    .app-header img {
+      height: 26px;
+      flex-shrink: 0;
+      filter: brightness(0) invert(1);
+    }
 
     .header-divider {
       width: 1px;
-      height: 28px;
-      background: var(--border);
+      height: 24px;
+      background: rgba(255,255,255,0.18);
     }
 
     .header-title { flex: 1; min-width: 0; }
-    .header-title h1 { font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .header-title h1 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
 
     .vmm-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
+      gap: 5px;
+      font-size: 10px;
       font-weight: 600;
-      color: var(--text-2);
+      color: rgba(255,255,255,0.5);
+      margin-top: 1px;
     }
 
     .vmm-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: var(--accent);
-      background: linear-gradient(135deg, #ff007f, #6f5bd6);
+      background: #60a5fa;
       flex-shrink: 0;
     }
 
     .header-emp {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--primary);
-      background: var(--primary-lt);
+      font-size: 11px;
+      font-weight: 700;
+      color: #0f172a;
+      background: #60a5fa;
       padding: 4px 10px;
       border-radius: 20px;
       white-space: nowrap;
       display: none;
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .header-emp.show { display: block; }
 
     .header-logid {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      color: var(--text-3);
-      background: var(--surface2);
-      border: 1px solid var(--border);
+      color: rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
       padding: 3px 8px;
       border-radius: 20px;
       white-space: nowrap;
@@ -158,10 +169,13 @@
     .app-body {
       flex: 1;
       display: flex;
-      max-width: 1200px;
+      max-width: 640px;
       margin: 0 auto;
       width: 100%;
-      padding: 0;
+    }
+
+    @media (min-width: 768px) {
+      .app-body { max-width: 1200px; padding: 0 16px; }
     }
 
     /* ── SIDEBAR (tablets+) ── */
@@ -177,10 +191,7 @@
       overflow-y: auto;
     }
 
-    @media (min-width: 768px) {
-      .sidebar { display: block; }
-      .app-body { padding: 0 16px; }
-    }
+    @media (min-width: 768px) { .sidebar { display: block; } }
 
     .sidebar-title {
       font-size: 10px;
@@ -202,62 +213,49 @@
       margin-bottom: 2px;
       transition: background 0.2s;
     }
-
-    .sidebar-step.active {
-      background: var(--primary-lt);
-    }
+    .sidebar-step.active { background: var(--primary-lt); }
 
     .sidebar-step .ss-num {
-      width: 24px;
-      height: 24px;
+      width: 24px; height: 24px;
       border-radius: 50%;
       background: var(--border);
       color: var(--text-3);
-      font-size: 11px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       transition: all 0.25s;
     }
     .sidebar-step.active .ss-num { background: var(--primary); color: white; }
-    .sidebar-step.done .ss-num { background: var(--success); color: white; }
+    .sidebar-step.done   .ss-num { background: var(--success); color: white; }
 
-    .sidebar-step .ss-label {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-3);
-      transition: color 0.2s;
-    }
+    .sidebar-step .ss-label { font-size: 13px; font-weight: 500; color: var(--text-3); transition: color 0.2s; }
     .sidebar-step.active .ss-label { color: var(--primary); font-weight: 700; }
-    .sidebar-step.done .ss-label { color: var(--success); }
-
-    .sidebar-step .ss-sub {
-      font-size: 10px;
-      color: var(--text-3);
-      line-height: 1.3;
-    }
+    .sidebar-step.done   .ss-label { color: var(--success); }
+    .sidebar-step .ss-sub { font-size: 10px; color: var(--text-3); line-height: 1.3; }
 
     /* ── MAIN CONTENT ── */
     .main-content {
       flex: 1;
       min-width: 0;
-      padding: 20px 0;
       display: flex;
       flex-direction: column;
+      padding-bottom: calc(20px + env(safe-area-inset-bottom));
     }
 
     @media (min-width: 768px) {
-      .main-content { padding: 24px 0; }
+      .main-content { padding-top: 8px; padding-bottom: 28px; }
     }
 
-    /* ── TOP PROGRESS BAR (mobile only) ── */
+    /* ── MOBILE PROGRESS BAR ── */
     .mobile-progress {
       display: block;
       background: var(--surface);
-      padding: 12px 16px 0;
+      padding: 10px 16px 12px;
       border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: var(--header-h);
+      z-index: 90;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     @media (min-width: 768px) { .mobile-progress { display: none; } }
 
@@ -268,51 +266,61 @@
       margin-bottom: 8px;
     }
 
-    .progress-label { font-size: 12px; font-weight: 600; color: var(--primary); }
+    .progress-label { font-size: 12px; font-weight: 700; color: var(--primary); }
     .progress-count { font-size: 11px; color: var(--text-3); font-family: var(--font-mono); }
 
     .progress-bar-track {
       width: 100%;
-      height: 3px;
+      height: 4px;
       background: var(--border);
       border-radius: 10px;
-      margin-bottom: 12px;
     }
 
     .progress-bar-fill {
       height: 100%;
-      background: linear-gradient(90deg, #ff007f, #6f5bd6);
+      background: linear-gradient(90deg, var(--primary), #60a5fa);
       border-radius: 10px;
       transition: width 0.4s ease;
     }
 
-    /* ── STEP CARD ── */
+    /* ══════════════════════════════════════
+       STEP CARD
+    ══════════════════════════════════════ */
     .step-card {
       display: none;
       background: var(--surface);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
+      margin: 14px 12px;
       overflow: hidden;
       animation: slideUp 0.22s ease;
-      margin: 0 12px;
+      position: relative;
     }
 
     .step-card.active { display: flex; flex-direction: column; }
 
     @media (min-width: 768px) {
-      .step-card { margin: 0; border-radius: var(--radius-xl); }
+      .step-card { margin: 16px 0; }
     }
 
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Step card inner sections */
-    .step-head {
-      padding: 18px 18px 0;
+    /* Colored top accent */
+    .step-card::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary) 0%, #60a5fa 100%);
+      flex-shrink: 0;
     }
-    @media (min-width: 480px) { .step-head { padding: 22px 24px 0; } }
+
+    /* ── STEP HEAD ── */
+    .step-head {
+      padding: 20px 20px 0;
+    }
 
     .step-badge {
       display: inline-flex;
@@ -324,84 +332,90 @@
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 20px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
     }
 
     .step-head h2 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--text);
       margin-bottom: 4px;
       line-height: 1.25;
     }
-    @media (min-width: 480px) { .step-head h2 { font-size: 22px; } }
 
     .step-head .hi {
       display: block;
       font-size: 13px;
       font-weight: 400;
       color: var(--text-3);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     /* ── INSTRUCTION BOX ── */
     .instruction-box {
-      margin: 14px 18px 0;
+      margin: 14px 20px 0;
       background: var(--info-lt);
       border: 1px solid var(--info-border);
       border-radius: var(--radius);
       padding: 12px 14px;
     }
-    @media (min-width: 480px) { .instruction-box { margin: 14px 24px 0; } }
 
     .instruction-box .ib-head {
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 700;
       color: var(--info-text);
-      margin-bottom: 6px;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .instruction-box ul {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
 
     .instruction-box li {
       font-size: 12px;
       color: #374151;
       display: flex;
-      gap: 7px;
+      gap: 8px;
       align-items: flex-start;
+      line-height: 1.5;
     }
 
-    .instruction-box li .li-icon { flex-shrink: 0; margin-top: 1px; }
+    .instruction-box li .li-icon {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--primary);
+      font-weight: 700;
+    }
 
     /* ── STEP BODY ── */
     .step-body {
-      padding: 18px;
+      padding: 20px;
       flex: 1;
     }
-    @media (min-width: 480px) { .step-body { padding: 22px 24px; } }
 
-    /* ── STEP FOOTER / NAV ── */
+    /* ── STEP NAV ── */
     .step-nav {
-      padding: 14px 18px;
+      padding: 14px 20px;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
       border-top: 1px solid var(--border);
       display: flex;
       gap: 10px;
       align-items: center;
       background: var(--surface2);
-      flex-wrap: wrap;
     }
-    @media (min-width: 480px) { .step-nav { padding: 16px 24px; } }
 
     .btn-back {
-      padding: 10px 16px;
+      height: 48px;
+      padding: 0 18px;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
       font-family: var(--font);
@@ -417,23 +431,27 @@
 
     .btn-next {
       flex: 1;
-      padding: 12px 20px;
+      height: 48px;
+      padding: 0 20px;
       border: none;
       border-radius: var(--radius);
       font-family: var(--font);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       color: white;
-      background: linear-gradient(135deg, #7c68e0, #6f5bd6);
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
       cursor: pointer;
       transition: all 0.18s;
-      box-shadow: 0 4px 14px rgba(111,91,214,0.35);
+      box-shadow: 0 4px 14px rgba(37,99,235,0.35);
       white-space: nowrap;
     }
-    .btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(111,91,214,0.45); }
+    .btn-next:hover  { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,0.45); }
     .btn-next:active { transform: translateY(0); }
     .btn-next:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
-    .btn-next.danger-btn { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 14px rgba(239,68,68,0.35); }
+    .btn-next.danger-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      box-shadow: 0 4px 14px rgba(239,68,68,0.35);
+    }
 
     /* ══════════════════════════════════════
        FORM COMPONENTS
@@ -445,44 +463,44 @@
 
     label.fl {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
       color: var(--text-2);
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
     label.fl .req { color: var(--danger); margin-left: 2px; }
-    label.fl .opt { color: var(--text-3); font-weight: 400; margin-left: 4px; }
+    label.fl .opt { color: var(--text-3); font-weight: 400; margin-left: 4px; text-transform: none; letter-spacing: 0; }
 
     .field {
       width: 100%;
-      padding: 11px 14px;
+      padding: 12px 14px;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
       font-family: var(--font);
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text);
       background: var(--surface);
       transition: border-color 0.18s, box-shadow 0.18s;
       -webkit-appearance: none;
+      min-height: 48px;
     }
     .field:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px var(--primary-glow);
     }
-    .field.has-error {
-      border-color: var(--danger);
-      background: var(--danger-lt);
-    }
-    .field.has-error:focus { box-shadow: 0 0 0 3px rgba(239,68,68,0.12); }
+    .field.has-error { border-color: var(--danger); background: var(--danger-lt); }
+    .field.has-error:focus { box-shadow: 0 0 0 3px rgba(220,38,38,0.12); }
 
-    textarea.field { resize: vertical; min-height: 90px; }
+    textarea.field { resize: vertical; min-height: 100px; }
 
     .err-msg {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--danger);
-      margin-top: 4px;
+      margin-top: 5px;
+      font-weight: 500;
       display: none;
     }
     .err-msg.show { display: block; }
@@ -495,15 +513,18 @@
       padding: 12px 14px;
       border-radius: var(--radius);
       font-size: 13px;
+      font-weight: 500;
       margin-top: 12px;
       display: none;
     }
     .alert-box.show { display: block; }
 
-    /* ── OPTION CARDS ── */
+    /* ══════════════════════════════════════
+       OPTION CARDS
+    ══════════════════════════════════════ */
     .opt-grid {
       display: grid;
-      gap: 8px;
+      gap: 10px;
       grid-template-columns: 1fr;
     }
     .opt-grid.cols-2 { grid-template-columns: 1fr 1fr; }
@@ -519,73 +540,81 @@
 
     .opt-card {
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 12px 14px;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
       cursor: pointer;
-      transition: all 0.18s;
+      transition: border-color 0.18s, background 0.18s, box-shadow 0.18s, transform 0.1s;
       background: var(--surface);
       -webkit-tap-highlight-color: transparent;
       user-select: none;
+      min-height: 56px;
     }
-    .opt-card:hover { border-color: var(--primary); background: var(--primary-lt); }
-    .opt-card.sel { border-color: var(--primary); background: var(--primary-lt); box-shadow: 0 0 0 3px var(--primary-glow); }
+    .opt-card:active  { transform: scale(0.985); }
+    .opt-card:hover   { border-color: var(--primary); background: var(--primary-lt); }
+    .opt-card.sel     {
+      border-color: var(--primary);
+      background: var(--primary-lt);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
 
     .opt-num {
-      width: 22px;
-      height: 22px;
+      width: 28px; height: 28px;
       border-radius: 50%;
-      background: var(--border);
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
       color: var(--text-3);
-      font-size: 11px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      margin-top: 1px;
       transition: all 0.18s;
       font-family: var(--font-mono);
     }
-    .opt-card.sel .opt-num { background: var(--primary); color: white; }
+    .opt-card.sel .opt-num {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
 
     .opt-text { flex: 1; min-width: 0; }
-    .opt-title { font-size: 13px; font-weight: 600; display: block; color: var(--text); margin-bottom: 2px; }
-    .opt-sub   { font-size: 11px; color: var(--text-3); }
+    .opt-title { font-size: 14px; font-weight: 600; display: block; color: var(--text); margin-bottom: 2px; }
+    .opt-sub   { font-size: 11px; color: var(--text-3); line-height: 1.4; }
     .opt-card.sel .opt-title { color: var(--primary); }
 
     /* ── REVIEW GRID ── */
     .review-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 14px;
     }
     @media (max-width: 400px) { .review-grid { grid-template-columns: 1fr; } }
 
-    .review-item { }
-    .review-item .ri-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); margin-bottom: 3px; }
-    .review-item .ri-val { font-size: 13px; font-weight: 600; color: var(--text); }
+    .review-item .ri-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 3px;
+    }
+    .review-item .ri-val { font-size: 14px; font-weight: 600; color: var(--text); }
 
     .info-panel {
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px;
+      padding: 16px;
       margin-bottom: 16px;
     }
 
     /* ── PHOTO UPLOAD ── */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
       margin-bottom: 16px;
     }
-    @media (max-width: 380px) { .photo-grid { grid-template-columns: 1fr 1fr; } }
 
-    .photo-slot label.fl { font-size: 11px; margin-bottom: 5px; }
+    .photo-slot label.fl { font-size: 11px; margin-bottom: 6px; }
 
     .upload-zone {
       position: relative;
@@ -602,79 +631,97 @@
       background: var(--surface2);
     }
     .upload-zone input[type=file] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer;
+      width: 100%; height: 100%;
     }
     .upload-zone:hover, .upload-zone.filled { border-color: var(--primary); background: var(--primary-lt); }
-    .upload-zone .uz-icon { font-size: 22px; margin-bottom: 4px; }
-    .upload-zone .uz-label { font-size: 10px; font-weight: 600; color: var(--text-3); text-align: center; padding: 0 4px; }
+    .upload-zone .uz-icon { font-size: 26px; margin-bottom: 6px; }
+    .upload-zone .uz-label { font-size: 10px; font-weight: 600; color: var(--text-3); text-align: center; padding: 0 6px; line-height: 1.4; }
     .upload-zone .uz-preview {
-      position: absolute;
-      inset: 0;
-      object-fit: cover;
-      display: none;
-      pointer-events: none;
+      position: absolute; inset: 0;
+      object-fit: cover; display: none; pointer-events: none;
     }
     .upload-zone.filled .uz-preview { display: block; }
     .upload-zone.filled .uz-icon, .upload-zone.filled .uz-label { display: none; }
     .upload-zone .uz-check {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 20px;
-      height: 20px;
+      position: absolute; top: 6px; right: 6px;
+      width: 22px; height: 22px;
       background: var(--success);
       border-radius: 50%;
       display: none;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: white;
+      align-items: center; justify-content: center;
+      font-size: 12px; color: white; font-weight: 700;
     }
     .upload-zone.filled .uz-check { display: flex; }
+
+    .upload-zone .uz-remove {
+      position: absolute;
+      top: 6px; left: 6px;
+      width: 26px; height: 26px;
+      background: rgba(0,0,0,0.55);
+      border-radius: 50%;
+      display: none;
+      align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      color: white;
+      cursor: pointer;
+      z-index: 3;
+      transition: background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .upload-zone .uz-remove:hover { background: rgba(220,38,38,0.9); }
+    .upload-zone.filled .uz-remove { display: flex; }
+
+    .upload-zone .uz-change {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.45);
+      color: white;
+      font-size: 10px; font-weight: 700;
+      text-align: center;
+      padding: 5px 0;
+      display: none;
+      pointer-events: none;
+      letter-spacing: 0.03em;
+    }
+    .upload-zone.filled .uz-change { display: block; }
 
     /* ── SUMMARY TABLE ── */
     .summary-table { width: 100%; border-collapse: collapse; }
     .summary-table tr { border-bottom: 1px solid var(--border); }
     .summary-table tr:last-child { border-bottom: none; }
     .summary-table td { padding: 10px 4px; font-size: 13px; vertical-align: top; }
-    .summary-table td:first-child { color: var(--text-3); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; width: 42%; }
+    .summary-table td:first-child { color: var(--text-3); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; width: 42%; }
     .summary-table td:last-child { font-weight: 600; color: var(--text); }
 
-    /* ── PHOTO PREVIEW ROW ── */
+    /* ── PHOTO PREVIEW ── */
     .photo-thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-    .photo-thumbs img { width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .photo-thumbs img { width: 68px; height: 68px; object-fit: cover; border-radius: var(--radius-sm); border: 2px solid var(--border); }
 
     /* ── SUCCESS SCREEN ── */
     .success-ring {
-      width: 72px;
-      height: 72px;
+      width: 80px; height: 80px;
       border-radius: 50%;
       background: var(--success-lt);
       border: 2px solid var(--success-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      margin: 0 auto 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 20px;
     }
 
     .ticket-chip {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: var(--primary-lt);
-      border: 1px solid #c4b5fd;
+      border: 1.5px solid #bfdbfe;
       border-radius: var(--radius);
-      padding: 10px 16px;
-      margin: 8px auto;
+      padding: 12px 18px;
+      margin: 10px auto;
     }
-    .ticket-chip .tc-label { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
-    .ticket-chip .tc-val { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text); }
+    .ticket-chip .tc-label { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.06em; }
+    .ticket-chip .tc-val { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--text); }
 
     /* ── SPINNER ── */
     .spinner {
@@ -697,22 +744,59 @@
       padding: 10px 14px;
       font-size: 12px;
       color: #92400e;
-      margin-top: 8px;
+      margin-top: 10px;
+      font-weight: 500;
     }
 
     /* ── FOOTER ── */
     .app-footer {
       background: var(--surface);
       border-top: 1px solid var(--border);
-      padding: 12px 16px;
+      padding: 14px 16px;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
       text-align: center;
       font-size: 11px;
       color: var(--text-3);
       line-height: 1.5;
     }
 
+    /* ── VENDOR SEARCH DROPDOWN ── */
+    .vendor-search-wrap { position: relative; }
+    .search-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: var(--surface);
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      max-height: 210px;
+      overflow-y: auto;
+      z-index: 200;
+      display: none;
+    }
+    .search-dropdown.open { display: block; }
+    .sd-item {
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sd-item:last-child { border-bottom: none; }
+    .sd-item:hover, .sd-item:active { background: var(--primary-lt); color: var(--primary); }
+    .sd-empty {
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text-3);
+      text-align: center;
+    }
+
     /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
   </style>
@@ -737,8 +821,7 @@
 
     <!-- Sidebar (tablets+) -->
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-title">Steps</div>
-      <!-- built by JS -->
+      <div class="sidebar-title">Your Progress</div>
     </aside>
 
     <!-- Main -->
@@ -786,6 +869,38 @@
         </div>
       </div>
 
+      <!-- ─── STEP 2: EMPLOYEE DETAILS ─── -->
+      <div class="step-card" id="step2">
+        <div class="step-head">
+          <div class="step-badge">✅ Step 2 of 11</div>
+          <h2>Confirm Your Details</h2>
+          <span class="hi">अपनी जानकारी की पुष्टि करें</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ How to fill this step</div>
+          <ul>
+            <li><span class="li-icon">→</span>Review the details fetched from our system. <strong>Do not proceed if details are incorrect.</strong></li>
+            <li><span class="li-icon">→</span>If your name, store, or code is wrong, go back and try a different number, or call <strong>9711772722</strong>.</li>
+            <li><span class="li-icon">→</span>Click <strong>Confirm &amp; Continue</strong> only if all details are correct.</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div class="info-panel review-grid" id="empGrid">
+            <div class="review-item"><div class="ri-label">Employee Name</div><div class="ri-val" id="rv_name">—</div></div>
+            <div class="review-item"><div class="ri-label">Employee Code</div><div class="ri-val" id="rv_code">—</div></div>
+            <div class="review-item"><div class="ri-label">Email</div><div class="ri-val" id="rv_email" style="word-break:break-all;">—</div></div>
+            <div class="review-item"><div class="ri-label">Mobile</div><div class="ri-val" id="rv_phone">—</div></div>
+            <div class="review-item"><div class="ri-label">Store Code</div><div class="ri-val" id="rv_scode">—</div></div>
+            <div class="review-item"><div class="ri-label">Store Name</div><div class="ri-val" id="rv_sname">—</div></div>
+            <div class="review-item"><div class="ri-label">City</div><div class="ri-val" id="rv_scity">—</div></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(1)">← Back</button>
+          <button class="btn-next" onclick="goTo(3)">Confirm &amp; Continue →</button>
+        </div>
+      </div>
+
       <!-- ─── STEP 3: COMPLAINT TYPE ─── -->
       <div class="step-card" id="step3">
         <div class="step-head">
@@ -817,38 +932,6 @@
         <div class="step-nav">
           <button class="btn-back" onclick="goTo(2)">← Back</button>
           <button class="btn-next" onclick="confirmMainComplaintType()">Next →</button>
-        </div>
-      </div>
-
-      <!-- ─── STEP 2: EMPLOYEE DETAILS ─── -->
-      <div class="step-card" id="step2">
-        <div class="step-head">
-          <div class="step-badge">✅ Step 2 of 11</div>
-          <h2>Confirm Your Details</h2>
-          <span class="hi">अपनी जानकारी की पुष्टि करें</span>
-        </div>
-        <div class="instruction-box">
-          <div class="ib-head">ℹ️ How to fill this step</div>
-          <ul>
-            <li><span class="li-icon">→</span>Review the details fetched from our system. <strong>Do not proceed if details are incorrect.</strong></li>
-            <li><span class="li-icon">→</span>If your name, store, or code is wrong, go back and try a different number, or call <strong>9711772722</strong>.</li>
-            <li><span class="li-icon">→</span>Click <strong>Confirm & Continue</strong> only if all details are correct.</li>
-          </ul>
-        </div>
-        <div class="step-body">
-          <div class="info-panel review-grid" id="empGrid">
-            <div class="review-item"><div class="ri-label">Employee Name</div><div class="ri-val" id="rv_name">—</div></div>
-            <div class="review-item"><div class="ri-label">Employee Code</div><div class="ri-val" id="rv_code">—</div></div>
-            <div class="review-item"><div class="ri-label">Email</div><div class="ri-val" id="rv_email" style="word-break:break-all;">—</div></div>
-            <div class="review-item"><div class="ri-label">Mobile</div><div class="ri-val" id="rv_phone">—</div></div>
-            <div class="review-item"><div class="ri-label">Store Code</div><div class="ri-val" id="rv_scode">—</div></div>
-            <div class="review-item"><div class="ri-label">Store Name</div><div class="ri-val" id="rv_sname">—</div></div>
-            <div class="review-item"><div class="ri-label">City</div><div class="ri-val" id="rv_scity">—</div></div>
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goTo(1)">← Back</button>
-          <button class="btn-next" onclick="goTo(3)">Confirm &amp; Continue →</button>
         </div>
       </div>
 
@@ -928,7 +1011,7 @@
               <div class="opt-num">2</div>
               <div class="opt-text"><span class="opt-title">Not Maintaining Proper Temperature</span><span class="opt-sub">सही तापमान नहीं · For refrigeration / AC units</span></div>
             </div>
-            <div class="opt-card" data-v="Servicing & Maintenance Required" onclick="selOpt(this,'complaintTypeGrid','complaintType')">
+            <div class="opt-card" data-v="Servicing &amp; Maintenance Required" onclick="selOpt(this,'complaintTypeGrid','complaintType')">
               <div class="opt-num">3</div>
               <div class="opt-text"><span class="opt-title">Servicing &amp; Maintenance Required</span><span class="opt-sub">सर्विसिंग चाहिए · Regular upkeep needed</span></div>
             </div>
@@ -997,23 +1080,49 @@
         <div class="step-head">
           <div class="step-badge">🏭 Step 8 of 11</div>
           <h2>Brand / Vendor Name</h2>
-          <span class="hi">ब्रांड या AMC Vendor का नाम</span>
+          <span class="hi" id="step8Hi">ब्रांड या Vendor का नाम</span>
         </div>
         <div class="instruction-box">
           <div class="ib-head">ℹ️ How to fill this step</div>
-          <ul>
+          <ul id="step8InstructionList">
             <li><span class="li-icon">→</span>Enter the <strong>brand name</strong> of the product (e.g., LG, Samsung, Voltas, Daikin).</li>
             <li><span class="li-icon">→</span>If the product is under AMC, enter the <strong>vendor/company name</strong> (e.g., BlueStar Services, Carrier AMC).</li>
             <li><span class="li-icon">→</span>If you don't know, type <strong>NA</strong>.</li>
           </ul>
         </div>
         <div class="step-body">
-          <div class="form-group">
-            <label class="fl">Brand / AMC Vendor Name <span class="req">*</span></label>
-            <input class="field" type="text" id="vendorInput" placeholder="e.g., LG, Samsung, Voltas, BlueStar Services, NA"
-              onkeyup="if(event.key==='Enter') confirmVendor()">
-            <div class="err-msg" id="vendorErr">Please enter a brand or vendor name (or type NA).</div>
+
+          <!-- WARRANTY mode: vendor grid + optional free-text -->
+          <div id="vendorGridSection" style="display:none;">
+            <div class="opt-grid" id="vendorGrid"></div>
+
+            <!-- Revealed only when "None of the above" is selected -->
+            <div id="customVendorWrap" style="display:none; margin-top:14px;">
+              <label class="fl">Enter Brand Name <span class="opt">(or type NA if unknown)</span></label>
+              <div class="vendor-search-wrap">
+                <input class="field" type="text" id="vendorSearchInput"
+                  placeholder="Type to search… e.g. Sam → Samsung"
+                  autocomplete="off"
+                  oninput="handleVendorSearch(this.value)"
+                  onblur="setTimeout(closeVendorDropdown, 180)">
+                <div class="search-dropdown" id="vendorDropdown"></div>
+              </div>
+            </div>
+
+            <div class="alert-box" id="vendorGridErr" style="margin-top:12px;">Please select a brand, or choose "None of the above" and enter it manually.</div>
           </div>
+
+          <!-- AMC / Not Applicable mode: plain text input -->
+          <div id="vendorTextSection">
+            <div class="form-group">
+              <label class="fl">Brand / AMC Vendor Name <span class="req">*</span></label>
+              <input class="field" type="text" id="vendorInput"
+                placeholder="e.g., LG, Samsung, Voltas, BlueStar Services, NA"
+                onkeyup="if(event.key==='Enter') confirmVendor()">
+              <div class="err-msg" id="vendorErr">Please enter a brand or vendor name (or type NA).</div>
+            </div>
+          </div>
+
         </div>
         <div class="step-nav">
           <button class="btn-back" onclick="goTo(7)">← Warranty</button>
@@ -1077,6 +1186,8 @@
                 <div class="uz-label">Tap to capture</div>
                 <img class="uz-preview" id="prev1" alt="">
                 <div class="uz-check">✓</div>
+                <div class="uz-remove" onclick="removePhoto(event,1)">✕</div>
+                <div class="uz-change">Tap to change</div>
               </div>
             </div>
             <div class="photo-slot">
@@ -1087,6 +1198,8 @@
                 <div class="uz-label">Tap to capture</div>
                 <img class="uz-preview" id="prev2" alt="">
                 <div class="uz-check">✓</div>
+                <div class="uz-remove" onclick="removePhoto(event,2)">✕</div>
+                <div class="uz-change">Tap to change</div>
               </div>
             </div>
             <div class="photo-slot">
@@ -1097,6 +1210,8 @@
                 <div class="uz-label">Tap to capture</div>
                 <img class="uz-preview" id="prev3" alt="">
                 <div class="uz-check">✓</div>
+                <div class="uz-remove" onclick="removePhoto(event,3)">✕</div>
+                <div class="uz-change">Tap to change</div>
               </div>
             </div>
           </div>
@@ -1168,21 +1283,21 @@
 
       <!-- ─── STEP 13: SUCCESS ─── -->
       <div class="step-card" id="step13">
-        <div class="step-body" style="text-align:center; padding: 40px 24px;">
+        <div class="step-body" style="text-align:center; padding: 48px 24px;">
           <div class="success-ring">✅</div>
-          <h2 style="font-size:22px; margin-bottom:8px;">Complaint Submitted!</h2>
-          <p style="color:var(--text-2); font-size:14px; margin-bottom:20px;">
+          <h2 style="font-size:24px; margin-bottom:8px;">Complaint Submitted!</h2>
+          <p style="color:var(--text-2); font-size:14px; margin-bottom:24px;">
             शिकायत सफलतापूर्वक दर्ज की गई।<br>Your team will be notified shortly.
           </p>
           <div class="ticket-chip">
             <div class="tc-label">Ticket ID</div>
             <div class="tc-val" id="ticketDisplay">—</div>
           </div>
-          <p style="font-size:12px; color:var(--text-3); margin-top:16px; margin-bottom:28px;">
+          <p style="font-size:12px; color:var(--text-3); margin-top:16px; margin-bottom:32px;">
             Keep this ticket ID for reference. You will receive a confirmation on your registered email / mobile.
           </p>
           <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-            <button class="btn-next" style="flex:unset; padding:12px 22px;" onclick="submitAnother()">Submit Another Complaint</button>
+            <button class="btn-next" style="flex:unset; padding:0 24px;" onclick="submitAnother()">Submit Another Complaint</button>
             <button class="btn-back" onclick="logoutUser()">Change Employee</button>
           </div>
         </div>
@@ -1206,8 +1321,32 @@ const CATEGORIES_WEBHOOK  = 'https://automation.openmindhelpline.com/webhook/cat
 const PRODUCTS_WEBHOOK    = 'https://automation.openmindhelpline.com/webhook/products';
 const NATURE_WEBHOOK      = 'https://automation.openmindhelpline.com/webhook/nature';
 
-let dynamicProducts          = null; // category list from categories webhook
-let fetchedProductsForCategory = null; // product list from products webhook for selected category
+let dynamicProducts            = null;
+let fetchedProductsForCategory = null;
+
+// ─── WARRANTY VENDOR LIST ───
+const WARRANTY_VENDORS = [
+  "Adtech","Ahuja","Arihant Infocoom","Blue Star","Carrier","Consul Neowatt",
+  "Ece","Euronics","Fuji Tech","Godrej","Gunnebo","Hitachi","Hublit",
+  "Jindal Electric","Johnson","Kirloskar","Kone","Krykard Atandra","Mitsubishi",
+  "Mitzvah","Neptune","Omega","Otis Elevator","Pie Industries","Schindler",
+  "Tk Elevator","Viewon","Western Control And Automation"
+];
+
+// Broader list for the free-text autocomplete search
+const BRAND_SEARCH_LIST = [...new Set([
+  ...WARRANTY_VENDORS,
+  "Samsung","LG","Voltas","Daikin","Panasonic","Whirlpool","Haier","Lloyd",
+  "Videocon","Onida","O General","Trane","York","Emerson","Siemens","ABB",
+  "Schneider Electric","Havells","Legrand","Philips","Wipro Lighting","Syska",
+  "Crompton","Bajaj","Orient","Usha","Honeywell","Bosch","CP Plus",
+  "Hikvision","Dahua","D-Link","TP-Link","Cisco","Netgear","HP","Dell",
+  "Lenovo","Epson","Canon","Brother","Zebra","TVS","Grundfos","CRI Pumps",
+  "Wilo","Aquaguard","Kent","Pureit","NA"
+])].sort((a,b) => a.localeCompare(b));
+
+// tracks whether user clicked "None of the above"
+let vendorNoneSelected = false;
 
 // ═══════════════════════════════════════════════
 //  PRODUCT DATA
@@ -1333,7 +1472,7 @@ async function verifyEmployee() {
       body: JSON.stringify({ query: mobile, logId: S.logId })
     });
     const raw  = await res.json();
-    const data = Array.isArray(raw) ? raw[0] : raw;  // unwrap array if needed
+    const data = Array.isArray(raw) ? raw[0] : raw;
 
     if (data.success === true) {
       S.mobile   = mobile;
@@ -1372,26 +1511,21 @@ async function verifyEmployee() {
 //  STEP 2 — MAIN COMPLAINT TYPE
 // ═══════════════════════════════════════════════
 function normalizeCategories(data) {
-  // Unwrap single-item array wrapper if present
   const d = (Array.isArray(data) && data.length === 1) ? data[0] : data;
 
-  // Format A: { success, categories: [{ number, name }, ...], total }  — API format
   if (d && d.categories && Array.isArray(d.categories)) {
     const out = {};
     d.categories.forEach(item => { out[item.name] = []; });
     return out;
   }
-  // Format B: { "Cat": ["prod1", "prod2"], ... }  — matches PRODUCTS shape directly
   if (d && !Array.isArray(d) && typeof d === 'object') {
     return d;
   }
-  // Format C: [{ category: "Cat", products: [...] }, ...]
   if (Array.isArray(d) && d.length && d[0].category !== undefined) {
     const out = {};
     d.forEach(item => { out[item.category] = item.products || []; });
     return out;
   }
-  // Format D: ["Cat1", "Cat2", ...] — just names
   if (Array.isArray(d) && d.length && typeof d[0] === 'string') {
     const out = {};
     d.forEach(cat => { out[cat] = []; });
@@ -1436,7 +1570,6 @@ async function confirmMainComplaintType() {
     btn.disabled = false;
     btn.innerHTML = 'Next →';
   } else {
-    // Rodent Damage — use fallback hardcoded data
     dynamicProducts = null;
   }
 
@@ -1485,7 +1618,7 @@ async function confirmCategory() {
     const data = await res.json();
 
     if (data.success && Array.isArray(data.products)) {
-      fetchedProductsForCategory = data.products; // [{ number, name }, ...]
+      fetchedProductsForCategory = data.products;
     } else {
       fetchedProductsForCategory = null;
     }
@@ -1513,10 +1646,8 @@ function buildProducts() {
 
   let productList = [];
   if (fetchedProductsForCategory && fetchedProductsForCategory.length) {
-    // API response: [{ number, name }, ...]
     productList = fetchedProductsForCategory.map(p => p.name || String(p));
   } else {
-    // Fallback to hardcoded PRODUCTS
     const source = dynamicProducts || PRODUCTS;
     productList = source[S.category] || [];
   }
@@ -1602,19 +1733,159 @@ function confirmWarranty() {
   const err = document.getElementById('wErr');
   if (!S.warrantyStatus) { err.classList.add('show'); return; }
   err.classList.remove('show');
+  buildVendorStep();
   goTo(8);
+}
+
+// ═══════════════════════════════════════════════
+//  STEP 8 — VENDOR STEP BUILDER
+// ═══════════════════════════════════════════════
+function buildVendorStep() {
+  vendorNoneSelected = false;
+  S.vendorName = '';
+
+  const gridSection = document.getElementById('vendorGridSection');
+  const textSection = document.getElementById('vendorTextSection');
+  const instrList   = document.getElementById('step8InstructionList');
+
+  if (S.warrantyStatus === 'Under Warranty') {
+    gridSection.style.display = 'block';
+    textSection.style.display = 'none';
+    document.getElementById('customVendorWrap').style.display = 'none';
+    document.getElementById('vendorGridErr').classList.remove('show');
+    instrList.innerHTML = `
+      <li><span class="li-icon">→</span>Select the <strong>brand/manufacturer</strong> of the product from the list below.</li>
+      <li><span class="li-icon">→</span>If your brand is not in the list, select <strong>"None of the above"</strong> and type it manually.</li>
+      <li><span class="li-icon">→</span>You can search by typing a few letters — e.g. <em>"Sam"</em> will show <em>Samsung</em>.</li>`;
+    buildVendorGrid();
+  } else {
+    gridSection.style.display = 'none';
+    textSection.style.display = 'block';
+    const hint = S.warrantyStatus === 'Under AMC'
+      ? 'e.g., BlueStar Services, Carrier AMC, Hitachi AMC'
+      : 'e.g., LG, Samsung, Voltas, Daikin, or type NA';
+    document.getElementById('vendorInput').placeholder = hint;
+    instrList.innerHTML = `
+      <li><span class="li-icon">→</span>Enter the <strong>${S.warrantyStatus === 'Under AMC' ? 'AMC vendor/company' : 'brand'} name</strong> of the product.</li>
+      <li><span class="li-icon">→</span>${S.warrantyStatus === 'Under AMC' ? 'Example: BlueStar Services, Carrier AMC, Hitachi AMC.' : 'Example: LG, Samsung, Voltas, Daikin.'}</li>
+      <li><span class="li-icon">→</span>If you don't know, type <strong>NA</strong>.</li>`;
+  }
+}
+
+function buildVendorGrid() {
+  const g = document.getElementById('vendorGrid');
+  g.innerHTML = '';
+  // clear any previously selected state
+  vendorNoneSelected = false;
+
+  WARRANTY_VENDORS.forEach((v, i) => {
+    const d = document.createElement('div');
+    d.className = 'opt-card';
+    d.dataset.v = v;
+    d.innerHTML = `<div class="opt-num">${i + 1}</div><div class="opt-text"><span class="opt-title">${v}</span></div>`;
+    d.onclick = () => selVendorCard(d, v);
+    g.appendChild(d);
+  });
+
+  // "None of the above" card
+  const none = document.createElement('div');
+  none.className = 'opt-card';
+  none.dataset.v  = '__none__';
+  none.innerHTML  = `<div class="opt-num" style="font-size:16px;">✏️</div><div class="opt-text"><span class="opt-title">None of the above</span><span class="opt-sub">ऊपर दी गई list में नहीं है · Enter manually</span></div>`;
+  none.onclick = () => selVendorCard(none, '__none__');
+  g.appendChild(none);
+}
+
+function selVendorCard(el, value) {
+  document.querySelectorAll('#vendorGrid .opt-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('vendorGridErr').classList.remove('show');
+
+  if (value === '__none__') {
+    vendorNoneSelected = true;
+    S.vendorName = '';
+    document.getElementById('customVendorWrap').style.display = 'block';
+    document.getElementById('vendorSearchInput').focus();
+  } else {
+    vendorNoneSelected = false;
+    S.vendorName = value;
+    document.getElementById('customVendorWrap').style.display = 'none';
+    document.getElementById('vendorSearchInput').value = '';
+    closeVendorDropdown();
+  }
+}
+
+function handleVendorSearch(query) {
+  const dd = document.getElementById('vendorDropdown');
+  const q  = query.trim().toLowerCase();
+  // also update vendorName as user types (free-form fallback)
+  S.vendorName = query.trim();
+
+  if (!q) { closeVendorDropdown(); return; }
+
+  const matches = BRAND_SEARCH_LIST.filter(b => b.toLowerCase().includes(q)).slice(0, 10);
+
+  if (!matches.length) {
+    dd.innerHTML = `<div class="sd-empty">No match — you can still type and continue</div>`;
+  } else {
+    dd.innerHTML = matches
+      .map(b => `<div class="sd-item" onmousedown="selectVendorResult('${b.replace(/'/g,"\\'")}')">
+        ${b.replace(new RegExp(`(${q})`, 'gi'), '<strong>$1</strong>')}
+      </div>`)
+      .join('');
+  }
+  dd.classList.add('open');
+}
+
+function selectVendorResult(brand) {
+  document.getElementById('vendorSearchInput').value = brand;
+  S.vendorName = brand;
+  closeVendorDropdown();
+}
+
+function closeVendorDropdown() {
+  const dd = document.getElementById('vendorDropdown');
+  if (dd) dd.classList.remove('open');
+  // sync vendorName with whatever is typed if in none mode
+  const inp = document.getElementById('vendorSearchInput');
+  if (inp && vendorNoneSelected) S.vendorName = inp.value.trim();
 }
 
 // ═══════════════════════════════════════════════
 //  STEP 8 — VENDOR
 // ═══════════════════════════════════════════════
 function confirmVendor() {
-  const val = document.getElementById('vendorInput').value.trim();
-  const err = document.getElementById('vendorErr');
-  const fld = document.getElementById('vendorInput');
-  if (!val) { err.classList.add('show'); fld.classList.add('has-error'); return; }
-  err.classList.remove('show'); fld.classList.remove('has-error');
-  S.vendorName = val;
+  if (S.warrantyStatus === 'Under Warranty') {
+    // warranty grid mode
+    const gridErr = document.getElementById('vendorGridErr');
+    if (vendorNoneSelected) {
+      // free-text mode — sync value first
+      const typed = document.getElementById('vendorSearchInput').value.trim();
+      if (!typed) {
+        gridErr.textContent = 'Please enter a brand name, or type NA.';
+        gridErr.classList.add('show');
+        document.getElementById('vendorSearchInput').classList.add('has-error');
+        return;
+      }
+      document.getElementById('vendorSearchInput').classList.remove('has-error');
+      S.vendorName = typed;
+    } else {
+      if (!S.vendorName) {
+        gridErr.textContent = 'Please select a brand from the list.';
+        gridErr.classList.add('show');
+        return;
+      }
+    }
+    gridErr.classList.remove('show');
+  } else {
+    // plain text mode (AMC / Not Applicable)
+    const val = document.getElementById('vendorInput').value.trim();
+    const err = document.getElementById('vendorErr');
+    const fld = document.getElementById('vendorInput');
+    if (!val) { err.classList.add('show'); fld.classList.add('has-error'); return; }
+    err.classList.remove('show'); fld.classList.remove('has-error');
+    S.vendorName = val;
+  }
   goTo(9);
 }
 
@@ -1645,6 +1916,18 @@ function handlePhoto(input, n) {
     uz.classList.remove('filled');
     prev.src = '';
   }
+}
+
+function removePhoto(event, n) {
+  event.stopPropagation(); // don't trigger the file input behind it
+  const inp  = document.getElementById('ph' + n);
+  const uz   = document.getElementById('uz' + n);
+  const prev = document.getElementById('prev' + n);
+  inp.value  = '';
+  prev.src   = '';
+  uz.classList.remove('filled');
+  // revoke the object URL to free memory
+  if (prev.src) URL.revokeObjectURL(prev.src);
 }
 
 function confirmPhotos() {
@@ -1690,7 +1973,6 @@ function buildSummary() {
   document.getElementById('summaryTable').innerHTML =
     rows.map(([k,v]) => `<tr><td>${k}</td><td>${esc(v)}</td></tr>`).join('');
 
-  // photo thumbs
   const thumbs = document.getElementById('photoThumbs');
   thumbs.innerHTML = '';
   [1,2,3].forEach(i => {
@@ -1711,10 +1993,8 @@ async function submitComplaint() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Submitting...';
 
-  // Simulate network delay
   await new Promise(r => setTimeout(r, 1500));
 
-  // Generate a demo ticket ID
   const demoTicketId = 'VMM-DEMO-' + Math.random().toString(36).substring(2,7).toUpperCase();
   document.getElementById('ticketDisplay').textContent = demoTicketId;
 
@@ -1723,7 +2003,7 @@ async function submitComplaint() {
   goTo(13);
 }
 
-// ═══════════════════════════════════════════════
+// ═════════════════════════════��═════════════════
 //  HELPERS
 // ═══════════════════════════════════════════════
 function selOpt(el, gridId, key) {
@@ -1739,6 +2019,9 @@ function submitAnother() {
   dynamicProducts = null;
   fetchedProductsForCategory = null;
   document.getElementById('vendorInput').value = '';
+  document.getElementById('vendorSearchInput').value = '';
+  vendorNoneSelected = false;
+  closeVendorDropdown();
   document.getElementById('locationInput').value = '';
   document.getElementById('remarksInput').value = '';
   [1,2,3].forEach(i => {
