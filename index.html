@@ -795,6 +795,103 @@
       text-align: center;
     }
 
+    /* ── AMC RESULT CARD ── */
+    .amc-result-card {
+      background: var(--success-lt);
+      border: 1.5px solid var(--success-border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      text-align: center;
+    }
+    .amc-result-card .arc-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--success);
+      margin-bottom: 8px;
+    }
+    .amc-result-card .arc-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .amc-result-card .arc-sub {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── PRODUCT SEARCH ── */
+    .prod-search-wrap { margin-bottom: 16px; }
+    .prod-search-input { font-size: 16px; padding: 14px 16px; }
+    .prod-search-hint {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 6px;
+      padding-left: 2px;
+    }
+    .prod-results {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .prod-result-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      background: var(--surface);
+      transition: border-color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .prod-result-item:hover  { border-color: var(--primary); background: var(--primary-lt); }
+    .prod-result-item.sel    { border-color: var(--primary); background: var(--primary-lt); box-shadow: 0 0 0 3px var(--primary-glow); }
+    .prod-result-item .pri-name  { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; }
+    .prod-result-item.sel .pri-name { color: var(--primary); }
+    .prod-result-item .pri-cat   { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+    .prod-result-item .pri-check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .prod-result-item.sel .pri-check { display: flex; }
+    .prod-no-results {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-3);
+      font-size: 14px;
+    }
+
+    /* ── STICKER ALERT (fire products) ── */
+    .sticker-alert {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: #fef9c3;
+      border: 1px solid #fde047;
+      border-radius: var(--radius);
+      padding: 14px;
+      color: #713f12;
+      margin-bottom: 16px;
+    }
+    .sticker-alert .sa-icon { font-size: 22px; flex-shrink: 0; line-height: 1.2; }
+    .sticker-alert .sa-text { font-size: 13px; line-height: 1.55; }
+    .sticker-alert .sa-text strong { color: #92400e; }
+
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -918,9 +1015,9 @@
         </div>
         <div class="step-body">
           <div class="opt-grid" id="mainComplaintTypeGrid">
-            <div class="opt-card" data-v="Rodent Damage" onclick="selOpt(this,'mainComplaintTypeGrid','mainComplaintType')">
+            <div class="opt-card" data-v="Rodent Damage/Pest Control" onclick="selOpt(this,'mainComplaintTypeGrid','mainComplaintType')">
               <div class="opt-num">A</div>
-              <div class="opt-text"><span class="opt-title">Rodent Damage</span><span class="opt-sub">कीट / चूहे से नुकसान · Damage caused by rodent activity</span></div>
+              <div class="opt-text"><span class="opt-title">Rodent Damage / Pest Control</span><span class="opt-sub">कीट / चूहे से नुकसान · Damage caused by rodent activity</span></div>
             </div>
             <div class="opt-card" data-v="Other Complaints (Facility)" onclick="selOpt(this,'mainComplaintTypeGrid','mainComplaintType')">
               <div class="opt-num">B</div>
@@ -960,27 +1057,26 @@
         </div>
       </div>
 
-      <!-- ─── STEP 5: PRODUCT ─── -->
+      <!-- ─── STEP 5: PRODUCT SEARCH ─── -->
       <div class="step-card" id="step5">
         <div class="step-head">
-          <div class="step-badge">🔧 Step 5 of 11</div>
+          <div class="step-badge">🔧 Step 4 of 11</div>
           <h2>Select Product</h2>
-          <span class="hi">Product चुनें</span>
-        </div>
-        <div class="instruction-box">
-          <div class="ib-head">ℹ️ How to fill this step</div>
-          <ul>
-            <li><span class="li-icon">→</span>Select the <strong>specific product</strong> that has the issue from the list.</li>
-            <li><span class="li-icon">→</span>The list shows products under your selected category: <strong id="catNameInStep4">—</strong></li>
-            <li><span class="li-icon">→</span>If you selected the wrong category, click <strong>← Back</strong> to change it.</li>
-          </ul>
+          <span class="hi">Product खोजें और चुनें</span>
         </div>
         <div class="step-body">
-          <div class="opt-grid cols-2" id="productGrid"></div>
+          <div class="prod-search-wrap">
+            <input class="field prod-search-input" type="text" id="productSearchInput"
+              placeholder="Product का नाम लिखें… जैसे Genset, AC, Lift"
+              autocomplete="off"
+              oninput="buildProductSearch(this.value)">
+            <div class="prod-search-hint">Type a few letters to search — matching products will appear below.</div>
+          </div>
+          <div id="productSearchResults" class="prod-results"></div>
           <div class="alert-box" id="prodErr">Please select a product to continue.</div>
         </div>
         <div class="step-nav">
-          <button class="btn-back" onclick="goTo(4)">← Category</button>
+          <button class="btn-back" onclick="goTo(3)">← Back</button>
           <button class="btn-next" onclick="confirmProduct()">Next →</button>
         </div>
       </div>
@@ -1098,10 +1194,17 @@
 
             <!-- Revealed only when "None of the above" is selected -->
             <div id="customVendorWrap" style="display:none; margin-top:14px;">
-              <label class="fl">Enter Brand Name <span class="opt">(or type NA if unknown)</span></label>
+              <div class="sticker-alert" style="background:#f0f9ff; border-color:#bae6fd; color:#0c4a6e; margin-bottom:12px;">
+                <div class="sa-icon">ℹ️</div>
+                <div class="sa-text">
+                  <strong>हमारी team इसे handle करेगी।</strong> Our team will take care of this.<br>
+                  <span style="font-size:12px;">अगर आप brand का नाम जानते हैं तो नीचे लिखें — यह complaint details में add हो जाएगा।<br>If you know the brand name, type it below — it will be added to your complaint details.</span>
+                </div>
+              </div>
+              <label class="fl">Brand Name <span class="opt">(optional — will be added to remarks)</span></label>
               <div class="vendor-search-wrap">
                 <input class="field" type="text" id="vendorSearchInput"
-                  placeholder="Type to search… e.g. Sam → Samsung"
+                  placeholder="Brand का नाम लिखें — नहीं पता तो खाली छोड़ें"
                   autocomplete="off"
                   oninput="handleVendorSearch(this.value)"
                   onblur="setTimeout(closeVendorDropdown, 180)">
@@ -1110,6 +1213,104 @@
             </div>
 
             <div class="alert-box" id="vendorGridErr" style="margin-top:12px;">Please select a brand, or choose "None of the above" and enter it manually.</div>
+          </div>
+
+          <!-- AMC LOOKUP mode: auto-fetch vendor from webhook -->
+          <div id="vendorAmcSection" style="display:none;">
+
+            <!-- Loading state -->
+            <div id="amcLoading" style="display:none; text-align:center; padding:28px 0;">
+              <span class="spinner" style="border-color:rgba(37,99,235,0.3); border-top-color:var(--primary); width:22px; height:22px;"></span>
+              <div style="margin-top:10px; font-size:13px; color:var(--text-2);">Fetching your store's AMC vendor...</div>
+            </div>
+
+            <!-- Vendor found -->
+            <div id="amcFound" style="display:none;">
+              <div class="amc-result-card">
+                <div class="arc-label">Your AMC Vendor</div>
+                <div class="arc-name" id="amcVendorName">—</div>
+                <div class="arc-sub">यह vendor आपके store के लिए AMC record में है।<br>This vendor is on AMC record for your store.</div>
+              </div>
+            </div>
+
+            <!-- No vendor found -->
+            <div id="amcNotFound" style="display:none;">
+              <div class="sticker-alert" style="background:#fff7ed; border-color:#fed7aa; color:#7c2d12;">
+                <div class="sa-icon">ℹ️</div>
+                <div class="sa-text">
+                  <strong>आपके store के लिए कोई AMC vendor record में नहीं है।</strong><br>
+                  No AMC vendor found on record for your store. Please check with your relevant team or select <strong>Not Applicable</strong> in the previous step if unsure.
+                </div>
+              </div>
+            </div>
+
+            <!-- Fallback: manual entry (shown if webhook fails) -->
+            <div id="amcFallback" style="display:none;">
+              <div class="warn-panel" style="margin-bottom:14px;">⚠️ Could not fetch AMC vendor automatically. Please enter manually.</div>
+              <input class="field" type="text" id="amcFallbackInput"
+                placeholder="AMC vendor का नाम लिखें"
+                onkeyup="if(event.key==='Enter') confirmVendor()">
+              <div class="err-msg" id="amcFallbackErr">Please enter the AMC vendor name.</div>
+            </div>
+
+          </div>
+
+          <!-- GENSET mode: Kirloskar or HO -->
+          <div id="vendorGensetSection" style="display:none;">
+            <div class="opt-grid">
+              <div class="opt-card" id="gensetKirloskar" onclick="selGenset('Kirloskar')">
+                <div class="opt-num">1</div>
+                <div class="opt-text">
+                  <span class="opt-title">Kirloskar</span>
+                  <span class="opt-sub">Genset is Kirloskar brand — vendor will be contacted</span>
+                </div>
+              </div>
+              <div class="opt-card" id="gensetOther" onclick="selGenset('__other__')">
+                <div class="opt-num">2</div>
+                <div class="opt-text">
+                  <span class="opt-title">Other Brand</span>
+                  <span class="opt-sub">दूसरी company का Genset है · Will be handled by Facility team</span>
+                </div>
+              </div>
+            </div>
+            <div class="alert-box" id="gensetErr" style="margin-top:12px;">Please select an option to continue.</div>
+          </div>
+
+          <!-- FIRE PRODUCT mode: sticker check + optional vendor -->
+          <div id="vendorFireSection" style="display:none;">
+            <div class="sticker-alert">
+              <div class="sa-text" style="width:100%;">
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                  <div style="display:flex; gap:10px; align-items:flex-start;">
+                    <span style="font-size:18px; flex-shrink:0;">🔍</span>
+                    <div>
+                      <div style="font-weight:700; font-size:14px;">क्या पहले कोई local vendor इस product पर काम कर चुका है?</div>
+                      <div style="font-size:12px; margin-top:3px;">Do you have any local vendor who has worked on this product before?</div>
+                    </div>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:flex-start;">
+                    <span style="font-size:18px; flex-shrink:0;">🏷️</span>
+                    <div>
+                      <div style="font-weight:600; font-size:14px;">Product पर कोई sticker या label है तो उसमें vendor का नाम देखें।</div>
+                      <div style="font-size:12px; margin-top:3px;">Check if the vendor has kept any sticker or label on the product with their name.</div>
+                    </div>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:flex-start;">
+                    <span style="font-size:18px; flex-shrink:0;">✏️</span>
+                    <div>
+                      <div style="font-weight:600; font-size:14px;">नाम मिले तो नीचे लिखें — नहीं पता तो खाली छोड़ दें।</div>
+                      <div style="font-size:12px; margin-top:3px;">If found, enter the name below. If not known, just leave it blank.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:16px;">
+              <label class="fl">Vendor / Service Provider का नाम <span class="opt">(optional)</span></label>
+              <input class="field" type="text" id="fireVendorInput"
+                placeholder="Vendor का नाम लिखें — नहीं पता तो खाली छोड़ें"
+                onkeyup="if(event.key==='Enter') confirmVendor()">
+            </div>
           </div>
 
           <!-- AMC / Not Applicable mode: plain text input -->
@@ -1125,7 +1326,7 @@
 
         </div>
         <div class="step-nav">
-          <button class="btn-back" onclick="goTo(7)">← Warranty</button>
+          <button class="btn-back" onclick="goBackFromVendor()">← Back</button>
           <button class="btn-next" onclick="confirmVendor()">Next →</button>
         </div>
       </div>
@@ -1155,7 +1356,7 @@
           </div>
         </div>
         <div class="step-nav">
-          <button class="btn-back" onclick="goTo(8)">← Vendor</button>
+          <button class="btn-back" onclick="goBackFromLocation()">← Back</button>
           <button class="btn-next" onclick="confirmLocation()">Next →</button>
         </div>
       </div>
@@ -1323,6 +1524,7 @@ const NATURE_WEBHOOK      = 'https://automation.openmindhelpline.com/webhook/nat
 
 let dynamicProducts            = null;
 let fetchedProductsForCategory = null;
+let allProductsFlat            = []; // { name, category } — used for search
 
 // ─── WARRANTY VENDOR LIST ───
 const WARRANTY_VENDORS = [
@@ -1373,7 +1575,65 @@ const PRODUCT_VENDORS = {
 
 function getVendorsForProduct(productName) {
   const key = (productName || '').trim().toLowerCase();
-  return PRODUCT_VENDORS[key] || WARRANTY_VENDORS; // show all if product not in map
+  return PRODUCT_VENDORS[key] || WARRANTY_VENDORS;
+}
+
+// ─── AMC WEBHOOK PRODUCTS ───
+// Products whose AMC vendor is fetched from n8n based on store code
+const AMC_WEBHOOKS = {
+  "ac":             "https://automation.openmindhelpline.com/webhook/AC-AMC",
+  "server room ac": "https://automation.openmindhelpline.com/webhook/AC-AMC",
+  "lift":           "https://automation.openmindhelpline.com/webhook/Lift-AMC",
+  "escalator":      "https://automation.openmindhelpline.com/webhook/Lift-AMC",
+};
+
+function getAmcWebhook() {
+  return AMC_WEBHOOKS[(S.product || '').trim().toLowerCase()] || null;
+}
+
+// ─── FIXED VENDOR PRODUCTS ───
+// Product has one known vendor — skip Steps 7 & 8, auto-assign vendor
+const FIXED_VENDOR_PRODUCTS = {
+  "sensormatic": "Adtech"
+};
+
+function getFixedVendor() {
+  return FIXED_VENDOR_PRODUCTS[(S.product || '').trim().toLowerCase()] || null;
+}
+
+// ─── FIRE / LOCAL-VENDOR PRODUCTS ───
+// These products skip Step 7 (Warranty) but show a sticker-check prompt in Step 8.
+// Vendor entry is optional — employee either notes the name from the sticker or skips.
+const FIRE_PRODUCTS = new Set([
+  "fire alarm","fire exit door","fire exit key box","fire extinguisher",
+  "fire hooter","fire panel","fire alarm panel","fire pump",
+  "fire sprinkler","sprinkler system","fire water motor","fire water tank",
+  "hose reel","smoke detector"
+]);
+
+function isFireProduct() {
+  return FIRE_PRODUCTS.has((S.product || '').trim().toLowerCase());
+}
+
+// ─── HO / FACILITY MANAGER DIRECT PRODUCTS ───
+// These products skip Steps 7 (Warranty) and 8 (Vendor) entirely
+const HO_DIRECT_PRODUCTS = new Set([
+  "acp","baggage rack","carpet","cash drawer","cctv","chair","civil work",
+  "diesel motor","digital video recorder","door","drainage","drawer",
+  "electrical","emergency bulb","exhaust fan","fan","fire equipment","fire hydrant",
+  "fly catcher","genset battery","glass","glass door","glow sign board","lift battery",
+  "lights","lock","mirror","mobile","music system","paint work",
+  "queue manager","railing","ramp","shutter","speaker","submersible pump",
+  "table","tiles","transformer","trial room","trolley","washroom",
+  "water meter","water motor","water pipe","water tank","wooden work"
+]);
+
+function isHoDirect() {
+  return HO_DIRECT_PRODUCTS.has((S.product || '').trim().toLowerCase());
+}
+
+function isGenset() {
+  return (S.product || '').trim().toLowerCase() === 'genset';
 }
 
 // ═══════════════════════════════════════════════
@@ -1402,7 +1662,8 @@ const S = {
   mainComplaintType: '',
   category: '', product: '',
   complaintType: '', warrantyStatus: '',
-  vendorName: '', location: '', remarks: ''
+  vendorName: '', noneOfAboveBrand: '',
+  location: '', remarks: ''
 };
 
 function generateLogId() {
@@ -1572,122 +1833,115 @@ async function confirmMainComplaintType() {
     return;
   }
 
-  if (S.mainComplaintType === 'Other Complaints (Facility)') {
-    const btn = document.querySelector('#step3 .btn-next');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>Loading categories...';
+  const btn = document.querySelector('#step3 .btn-next');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Loading products...';
 
+  if (S.mainComplaintType === 'Other Complaints (Facility)') {
     try {
-      const res  = await fetch(CATEGORIES_WEBHOOK, {
+      // Step 1: fetch categories
+      const catRes  = await fetch(CATEGORIES_WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'Other Complaints (Facility)', logId: S.logId })
       });
-      if (!res.ok) throw new Error('http ' + res.status);
-      const data = await res.json();
-      const normalized = normalizeCategories(data);
-      dynamicProducts = normalized || PRODUCTS;
+      if (!catRes.ok) throw new Error('http ' + catRes.status);
+      const catData    = await catRes.json();
+      const normalized = normalizeCategories(catData);
+      dynamicProducts  = normalized || PRODUCTS;
+
+      // Step 2: fetch all products for every category in parallel
+      const categories = Object.keys(dynamicProducts);
+      const results = await Promise.all(
+        categories.map(cat =>
+          fetch(PRODUCTS_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ categoryName: cat, logId: S.logId })
+          })
+          .then(r => r.json())
+          .then(d => ({ cat, products: (d.success && Array.isArray(d.products)) ? d.products : [] }))
+          .catch(() => ({ cat, products: [] }))
+        )
+      );
+
+      // Build flat list
+      allProductsFlat = [];
+      results.forEach(({ cat, products }) => {
+        if (products.length) {
+          products.forEach(p => allProductsFlat.push({ name: p.name || String(p), category: cat }));
+        } else {
+          // fallback to local list for this category
+          (dynamicProducts[cat] || []).forEach(name => allProductsFlat.push({ name, category: cat }));
+        }
+      });
+
     } catch (e) {
       btn.disabled = false;
       btn.innerHTML = 'Next →';
-      err.textContent = '❌ Failed to load categories. Please check your connection and try again.';
+      err.textContent = '❌ Failed to load products. Please check your connection and try again.';
       err.classList.add('show');
       return;
     }
-
-    btn.disabled = false;
-    btn.innerHTML = 'Next →';
   } else {
     dynamicProducts = null;
-  }
-
-  buildCategories();
-  goTo(4);
-}
-
-// ═══════════════════════════════════════════════
-//  STEP 4 — CATEGORY
-// ═══════════════════════════════════════════════
-function buildCategories() {
-  const source = dynamicProducts || PRODUCTS;
-  const g = document.getElementById('categoryGrid');
-  g.innerHTML = '';
-  Object.keys(source).forEach((cat, i) => {
-    const d = document.createElement('div');
-    d.className = 'opt-card';
-    d.dataset.v = cat;
-    d.innerHTML = `<div class="opt-num">${i+1}</div><div class="opt-text"><span class="opt-title">${cat}</span></div>`;
-    d.onclick = () => selOpt(d, 'categoryGrid', 'category');
-    g.appendChild(d);
-  });
-}
-
-async function confirmCategory() {
-  const err = document.getElementById('catErr');
-  err.classList.remove('show');
-
-  if (!S.category) {
-    err.textContent = 'Please select a category to continue.';
-    err.classList.add('show');
-    return;
-  }
-
-  const btn = document.querySelector('#step4 .btn-next');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Loading products...';
-
-  try {
-    const res = await fetch(PRODUCTS_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ categoryName: S.category, logId: S.logId })
-    });
-    if (!res.ok) throw new Error('http ' + res.status);
-    const data = await res.json();
-
-    if (data.success && Array.isArray(data.products)) {
-      fetchedProductsForCategory = data.products;
-    } else {
-      fetchedProductsForCategory = null;
-    }
-  } catch (e) {
-    btn.disabled = false;
-    btn.innerHTML = 'Next →';
-    err.textContent = '❌ Failed to load products. Please check your connection and try again.';
-    err.classList.add('show');
-    return;
+    // Use local PRODUCTS as flat list for Rodent flow
+    allProductsFlat = [];
+    Object.entries(PRODUCTS).forEach(([cat, prods]) =>
+      prods.forEach(name => allProductsFlat.push({ name, category: cat }))
+    );
   }
 
   btn.disabled = false;
   btn.innerHTML = 'Next →';
-  buildProducts();
+  buildProductSearch('');
   goTo(5);
 }
 
 // ═══════════════════════════════════════════════
-//  STEP 5 — PRODUCT
+//  STEP 5 — PRODUCT SEARCH
 // ═══════════════════════════════════════════════
-function buildProducts() {
-  const g = document.getElementById('productGrid');
-  g.innerHTML = '';
-  document.getElementById('catNameInStep4').textContent = S.category;
+function buildProductSearch(query) {
+  const container = document.getElementById('productSearchResults');
+  const q = (query || '').trim().toLowerCase();
 
-  let productList = [];
-  if (fetchedProductsForCategory && fetchedProductsForCategory.length) {
-    productList = fetchedProductsForCategory.map(p => p.name || String(p));
-  } else {
-    const source = dynamicProducts || PRODUCTS;
-    productList = source[S.category] || [];
+  // Filter matching products
+  const matches = q.length === 0
+    ? []
+    : allProductsFlat.filter(p => p.name.toLowerCase().includes(q));
+
+  container.innerHTML = '';
+
+  if (q.length === 0) {
+    container.innerHTML = '<div class="prod-no-results" style="color:var(--text-3);">ऊपर search करें — products दिखेंगे<br><span style="font-size:12px;">Start typing above to see products</span></div>';
+    return;
   }
 
-  productList.forEach((p, i) => {
+  if (!matches.length) {
+    container.innerHTML = '<div class="prod-no-results">कोई product नहीं मिला। दूसरे शब्द try करें।<br><span style="font-size:12px;">No products found — try different keywords</span></div>';
+    return;
+  }
+
+  matches.forEach(p => {
     const d = document.createElement('div');
-    d.className = 'opt-card';
-    d.dataset.v = p;
-    d.innerHTML = `<div class="opt-num">${i+1}</div><div class="opt-text"><span class="opt-title">${p}</span></div>`;
-    d.onclick = () => selOpt(d, 'productGrid', 'product');
-    g.appendChild(d);
+    d.className = 'prod-result-item' + (S.product === p.name ? ' sel' : '');
+    d.innerHTML = `
+      <div>
+        <div class="pri-name">${p.name}</div>
+        <div class="pri-cat">${p.category}</div>
+      </div>
+      <div class="pri-check">✓</div>`;
+    d.onclick = () => selectProduct(d, p.name, p.category);
+    container.appendChild(d);
   });
+}
+
+function selectProduct(el, name, category) {
+  document.querySelectorAll('.prod-result-item').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  S.product  = name;
+  S.category = category;
+  document.getElementById('prodErr').classList.remove('show');
 }
 
 async function confirmProduct() {
@@ -1702,13 +1956,13 @@ async function confirmProduct() {
 
   const btn = document.querySelector('#step5 .btn-next');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Loading complaint types...';
+  btn.innerHTML = '<span class="spinner"></span>Loading...';
 
   try {
     const res = await fetch(NATURE_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ logId: S.logId, product: S.product })
+      body: JSON.stringify({ logId: S.logId, product: S.product, categoryName: S.category })
     });
     if (!res.ok) throw new Error('http ' + res.status);
     const data = await res.json();
@@ -1719,7 +1973,7 @@ async function confirmProduct() {
   } catch (e) {
     btn.disabled = false;
     btn.innerHTML = 'Next →';
-    err.textContent = '❌ Failed to load complaint types. Please try again.';
+    err.textContent = '❌ Failed to load. Please try again.';
     err.classList.add('show');
     return;
   }
@@ -1727,21 +1981,38 @@ async function confirmProduct() {
   btn.disabled = false;
   btn.innerHTML = 'Next →';
   document.getElementById('prodNameInStep5').textContent = S.product;
+  filterStaticComplaintTypes();
   goTo(6);
+}
+
+const TEMP_PRODUCTS = new Set(['ac', 'server room ac']);
+
+function showsTemperatureOption() {
+  return TEMP_PRODUCTS.has((S.product || '').trim().toLowerCase());
 }
 
 function buildComplaintTypes(types) {
   const g = document.getElementById('complaintTypeGrid');
   g.innerHTML = '';
-  types.forEach((t, i) => {
+  let num = 1;
+  types.forEach(t => {
+    if (t.name.toLowerCase().includes('temperature') && !showsTemperatureOption()) return;
     const d = document.createElement('div');
     d.className = 'opt-card';
     d.dataset.v = t.name;
-    d.innerHTML = `<div class="opt-num">${i + 1}</div>
+    d.innerHTML = `<div class="opt-num">${num++}</div>
       <div class="opt-text"><span class="opt-title">${t.name}</span></div>`;
     d.onclick = () => selOpt(d, 'complaintTypeGrid', 'complaintType');
     g.appendChild(d);
   });
+}
+
+function filterStaticComplaintTypes() {
+  // For the static HTML fallback cards — hide temperature option if not AC
+  const tempCard = document.querySelector('#complaintTypeGrid .opt-card[data-v="Not Maintaining Proper Temperature"]');
+  if (tempCard) {
+    tempCard.style.display = showsTemperatureOption() ? '' : 'none';
+  }
 }
 
 // ═══════════════════════════════════════════════
@@ -1751,7 +2022,42 @@ function confirmComplaintType() {
   const err = document.getElementById('ctErr');
   if (!S.complaintType) { err.classList.add('show'); return; }
   err.classList.remove('show');
-  goTo(7);
+
+  const fixedVendor = getFixedVendor();
+  if (fixedVendor) {
+    // Fixed vendor known — skip Steps 7 & 8 entirely
+    S.warrantyStatus = 'N/A — Fixed Vendor';
+    S.vendorName     = fixedVendor;
+    goTo(9);
+  } else if (isHoDirect()) {
+    // Skip warranty + vendor steps — routed to HO/Facility Manager
+    S.warrantyStatus = 'N/A — HO Direct';
+    S.vendorName     = 'N/A — HO Direct';
+    goTo(9);
+  } else if (isGenset()) {
+    // Skip warranty step — just Kirloskar or HO
+    S.warrantyStatus = 'N/A — Genset';
+    buildVendorStep();
+    goTo(8);
+  } else if (isFireProduct()) {
+    // Skip warranty step — show sticker-check prompt in Step 8
+    S.warrantyStatus = 'N/A — Local Vendor';
+    buildVendorStep();
+    goTo(8);
+  } else {
+    goTo(7);
+  }
+}
+
+function goBackFromVendor() {
+  // Genset + Fire products came from Step 6 (skipped Step 7), normal products from Step 7
+  goTo((isGenset() || isFireProduct()) ? 6 : 7);
+}
+
+function goBackFromLocation() {
+  // Fixed vendor + HO Direct skipped Steps 7 & 8 — go back to Step 6
+  // All others went through Step 8
+  goTo((isHoDirect() || getFixedVendor()) ? 6 : 8);
 }
 
 // ═══════════════════════════════════════════════
@@ -1772,9 +2078,43 @@ function buildVendorStep() {
   vendorNoneSelected = false;
   S.vendorName = '';
 
-  const gridSection = document.getElementById('vendorGridSection');
-  const textSection = document.getElementById('vendorTextSection');
-  const instrList   = document.getElementById('step8InstructionList');
+  const gridSection   = document.getElementById('vendorGridSection');
+  const textSection   = document.getElementById('vendorTextSection');
+  const fireSection   = document.getElementById('vendorFireSection');
+  const gensetSection = document.getElementById('vendorGensetSection');
+  const amcSection    = document.getElementById('vendorAmcSection');
+  const instrList     = document.getElementById('step8InstructionList');
+  const step8h2       = document.querySelector('#step8 h2');
+  const step8InstrBox = document.querySelector('#step8 .instruction-box');
+
+  // hide all sections first
+  gridSection.style.display   = 'none';
+  textSection.style.display   = 'none';
+  fireSection.style.display   = 'none';
+  gensetSection.style.display = 'none';
+  amcSection.style.display    = 'none';
+  step8InstrBox.style.display = '';
+
+  if (isGenset()) {
+    gensetSection.style.display = 'block';
+    step8h2.textContent = 'Genset Brand';
+    step8InstrBox.style.display = 'none';
+    document.getElementById('gensetKirloskar').classList.remove('sel');
+    document.getElementById('gensetOther').classList.remove('sel');
+    document.getElementById('gensetErr').classList.remove('show');
+    S.vendorName = '';
+    return;
+  }
+
+  if (isFireProduct()) {
+    fireSection.style.display = 'block';
+    step8h2.textContent = 'Service Vendor / Sticker';
+    step8InstrBox.style.display = 'none';
+    document.getElementById('fireVendorInput').value = '';
+    return;
+  }
+
+  step8h2.textContent = 'Brand / Vendor Name';
 
   if (S.warrantyStatus === 'Under Warranty') {
     gridSection.style.display = 'block';
@@ -1788,8 +2128,13 @@ function buildVendorStep() {
       <li><span class="li-icon">→</span>If your brand is not listed, select <strong>"None of the above"</strong> and type it manually.</li>
       <li><span class="li-icon">→</span>${productVendors.length} brand(s) available for this product. Search by typing a few letters.</li>`;
     buildVendorGrid();
+  } else if (S.warrantyStatus === 'Under AMC' && getAmcWebhook()) {
+    // AMC with webhook — auto-fetch vendor for this store
+    amcSection.style.display = 'block';
+    step8h2.textContent = 'AMC Vendor';
+    step8InstrBox.style.display = 'none';
+    fetchAmcVendor();
   } else {
-    gridSection.style.display = 'none';
     textSection.style.display = 'block';
     const hint = S.warrantyStatus === 'Under AMC'
       ? 'e.g., BlueStar Services, Carrier AMC, Hitachi AMC'
@@ -1885,21 +2230,95 @@ function closeVendorDropdown() {
 // ═══════════════════════════════════════════════
 //  STEP 8 — VENDOR
 // ═══════════════════════════════════════════════
+async function fetchAmcVendor() {
+  const loading   = document.getElementById('amcLoading');
+  const found     = document.getElementById('amcFound');
+  const notFound  = document.getElementById('amcNotFound');
+  const fallback  = document.getElementById('amcFallback');
+
+  // reset
+  loading.style.display  = 'block';
+  found.style.display    = 'none';
+  notFound.style.display = 'none';
+  fallback.style.display = 'none';
+  S.vendorName = '';
+
+  try {
+    const res = await fetch(getAmcWebhook(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ store_id: S.store.code, logId: S.logId })
+    });
+    if (!res.ok) throw new Error('http ' + res.status);
+    const data = await res.json();
+    const vendor = (data.vendor_name || '').trim();
+
+    loading.style.display = 'none';
+
+    if (!vendor || vendor.toLowerCase() === 'not applicable') {
+      S.vendorName = 'N/A — HO Direct';
+    } else {
+      S.vendorName = vendor;
+    }
+    goTo(9);
+  } catch (e) {
+    loading.style.display  = 'none';
+    fallback.style.display = 'block';
+  }
+}
+
+function selGenset(value) {
+  document.getElementById('gensetKirloskar').classList.toggle('sel', value === 'Kirloskar');
+  document.getElementById('gensetOther').classList.toggle('sel', value === '__other__');
+  document.getElementById('gensetErr').classList.remove('show');
+  S.vendorName = value;
+}
+
 function confirmVendor() {
+  // AMC webhook mode
+  if (S.warrantyStatus === 'Under AMC' && getAmcWebhook()) {
+    const fallback = document.getElementById('amcFallback');
+    if (fallback.style.display !== 'none') {
+      // webhook failed — validate manual input
+      const val = document.getElementById('amcFallbackInput').value.trim();
+      const err = document.getElementById('amcFallbackErr');
+      if (!val) { err.classList.add('show'); return; }
+      err.classList.remove('show');
+      S.vendorName = val;
+    }
+    // S.vendorName already set by fetchAmcVendor (found or Not Applicable)
+    goTo(9);
+    return;
+  }
+
+  // Genset mode — Kirloskar or Other (HO)
+  if (isGenset()) {
+    const err = document.getElementById('gensetErr');
+    if (!S.vendorName) { err.classList.add('show'); return; }
+    err.classList.remove('show');
+    // "Other Brand" → treat as HO Direct internally
+    if (S.vendorName === '__other__') S.vendorName = '';
+    goTo(9);
+    return;
+  }
+
+  // Fire product mode — vendor is optional (from sticker)
+  if (isFireProduct()) {
+    const val = document.getElementById('fireVendorInput').value.trim();
+    S.vendorName = val || '';
+    goTo(9);
+    return;
+  }
+
   if (S.warrantyStatus === 'Under Warranty') {
     // warranty grid mode
     const gridErr = document.getElementById('vendorGridErr');
     if (vendorNoneSelected) {
-      // free-text mode — sync value first
+      // None of above — HO team handles, brand info goes to remarks
       const typed = document.getElementById('vendorSearchInput').value.trim();
-      if (!typed) {
-        gridErr.textContent = 'Please enter a brand name, or type NA.';
-        gridErr.classList.add('show');
-        document.getElementById('vendorSearchInput').classList.add('has-error');
-        return;
-      }
+      S.vendorName       = 'N/A — HO Direct';
+      S.noneOfAboveBrand = typed; // may be empty — that's fine
       document.getElementById('vendorSearchInput').classList.remove('has-error');
-      S.vendorName = typed;
     } else {
       if (!S.vendorName) {
         gridErr.textContent = 'Please select a brand from the list.';
@@ -1978,7 +2397,9 @@ function confirmRemarks() {
   const fld = document.getElementById('remarksInput');
   if (!val || val.length < 10) { err.classList.add('show'); fld.classList.add('has-error'); return; }
   err.classList.remove('show'); fld.classList.remove('has-error');
-  S.remarks = val;
+  S.remarks = S.noneOfAboveBrand
+    ? 'Brand info: ' + S.noneOfAboveBrand + '. ' + val
+    : val;
   buildSummary();
   goTo(12);
 }
@@ -1987,19 +2408,34 @@ function confirmRemarks() {
 //  STEP 12 — REVIEW
 // ═══════════════════════════════════════════════
 function buildSummary() {
+  const hoRouted    = isHoDirect();
+  const fireProd    = isFireProduct();
+  const gensetProd  = isGenset();
+  const fixedVendor = getFixedVendor();
   const rows = [
-    ['Employee',              S.employee.name  || '—'],
-    ['Code',                  S.employee.code  || '—'],
-    ['Store',                 (S.store.name || '—') + ' (' + (S.store.code || '—') + ')'],
-    ['City',                  S.store.city     || '—'],
-    ['Complaint Category',    S.mainComplaintType],
-    ['Category',              S.category],
-    ['Product',               S.product],
-    ['Complaint Type',        S.complaintType],
-    ['Warranty Status',       S.warrantyStatus],
-    ['Brand / Vendor',        S.vendorName],
-    ['Location',              S.location],
-    ['Remarks',               S.remarks],
+    ['Employee',           S.employee.name  || '—'],
+    ['Code',               S.employee.code  || '—'],
+    ['Store',              (S.store.name || '—') + ' (' + (S.store.code || '—') + ')'],
+    ['City',               S.store.city     || '—'],
+    ['Complaint Category', S.mainComplaintType],
+    ['Category',           S.category],
+    ['Product',            S.product],
+    ['Complaint Type',     S.complaintType],
+    ...(hoRouted
+      ? [['Routed To', '📋 Facility Manager / HO Team']]
+      : fixedVendor
+        ? [['Vendor', S.vendorName]]
+      : gensetProd
+        ? (S.vendorName ? [['Brand', S.vendorName]] : [])
+      : fireProd
+        ? (S.vendorName ? [['Service Vendor', S.vendorName]] : [])
+        : [
+            ['Warranty Status', S.warrantyStatus],
+            ['Brand / Vendor',  S.vendorName],
+          ]
+    ),
+    ['Location',           S.location],
+    ['Remarks',            S.remarks],
   ];
   document.getElementById('summaryTable').innerHTML =
     rows.map(([k,v]) => `<tr><td>${k}</td><td>${esc(v)}</td></tr>`).join('');
@@ -2046,9 +2482,13 @@ function selOpt(el, gridId, key) {
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function submitAnother() {
-  ['mainComplaintType','category','product','complaintType','warrantyStatus','vendorName','location','remarks'].forEach(k => S[k] = '');
+  ['mainComplaintType','category','product','complaintType','warrantyStatus','vendorName','noneOfAboveBrand','location','remarks'].forEach(k => S[k] = '');
   dynamicProducts = null;
   fetchedProductsForCategory = null;
+  allProductsFlat = [];
+  const psi = document.getElementById('productSearchInput');
+  if (psi) { psi.value = ''; }
+  buildProductSearch('');
   document.getElementById('vendorInput').value = '';
   document.getElementById('vendorSearchInput').value = '';
   vendorNoneSelected = false;
@@ -2065,7 +2505,7 @@ function submitAnother() {
   });
   document.querySelectorAll('.opt-card').forEach(c => c.classList.remove('sel'));
   document.querySelectorAll('.alert-box').forEach(a => a.classList.remove('show'));
-  goTo(2);
+  goTo(3); // employee already verified — jump straight to complaint type
 }
 
 function logoutUser() { location.reload(); }
@@ -2074,7 +2514,7 @@ function logoutUser() { location.reload(); }
 //  INIT
 // ═══════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  buildCategories();
+  buildProductSearch('');
   goTo(1);
 });
 </script>
