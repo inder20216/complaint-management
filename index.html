@@ -699,6 +699,71 @@
     .photo-thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
     .photo-thumbs img { width: 68px; height: 68px; object-fit: cover; border-radius: var(--radius-sm); border: 2px solid var(--border); }
 
+    /* ══════════════════════════════════════
+       RODENT FORM
+    ══════════════════════════════════════ */
+    .rodent-photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .gap-status-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .gap-opt {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 12px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-2);
+      transition: all 0.18s;
+      background: var(--surface);
+      user-select: none;
+    }
+    .gap-opt:hover { border-color: var(--primary); color: var(--primary); }
+    .gap-opt.sel   { border-color: var(--primary); background: var(--primary-lt); color: var(--primary); }
+
+    .rodent-section-divider {
+      border: none;
+      border-top: 1px dashed var(--border);
+      margin: 20px 0 16px;
+    }
+
+    .rodent-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+
+    .verify-article-btn {
+      height: 44px;
+      padding: 0 16px;
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-lt);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s;
+      flex-shrink: 0;
+    }
+    .verify-article-btn:hover { background: var(--primary); color: #fff; }
+    .verify-article-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
     /* ── SUCCESS SCREEN ── */
     .success-ring {
       width: 80px; height: 80px;
@@ -1504,6 +1569,200 @@
         </div>
       </div>
 
+      <!-- ─── STEP R1: RODENT INSTRUCTIONS ─── -->
+      <div class="step-card" id="stepR1">
+        <div class="step-head">
+          <div class="step-badge">🐭 Rodent Damage / Pest Control</div>
+          <h2>Instructions — पढ़ें ध्यान से</h2>
+          <span class="hi">Form भरने से पहले यह जानकारी जरूरी है</span>
+        </div>
+        <div class="instruction-box">
+          <div class="ib-head">ℹ️ आगे बढ़ने से पहले तैयार रखें</div>
+          <ul>
+            <li><span class="li-icon">→</span><strong>Article No.</strong> — Damaged product का article number (6–12 अंक).</li>
+            <li><span class="li-icon">→</span><strong>MRP &amp; Net Selling Price</strong> — Product का price tag देखकर भरें.</li>
+            <li><span class="li-icon">→</span><strong>MFD / EXP Date</strong> — Manufacturing और expiry date packet से देखें.</li>
+            <li><span class="li-icon">→</span><strong>4 Photos</strong> — EXP date image, bite area, gap before closing, gap after closing.</li>
+            <li><span class="li-icon">→</span><strong>Gap Status</strong> — क्या gap/hole बंद कर दिया गया है?</li>
+          </ul>
+        </div>
+        <div class="step-body">
+          <div style="background:var(--warn-lt); border:1px solid var(--warn-border); border-radius:var(--radius); padding:14px 16px;">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="font-size:18px; flex-shrink:0;">📸</span>
+                <div>
+                  <div style="font-weight:700; font-size:14px;">Photos पहले से खींच लें</div>
+                  <div style="font-size:12px; color:var(--text-2); margin-top:3px;">EXP date, bite mark, gap (पहले और बाद) — चारों photos ready रखें।<br><span style="color:#92400e;">Take all 4 photos before you fill the form.</span></div>
+                </div>
+              </div>
+              <div style="display:flex; gap:10px; align-items:flex-start;">
+                <span style="font-size:18px; flex-shrink:0;">⚠️</span>
+                <div>
+                  <div style="font-weight:700; font-size:14px;">Damaged product को हटाएं नहीं</div>
+                  <div style="font-size:12px; color:var(--text-2); margin-top:3px;">Report करने से पहले product को shelf से हटा दें पर फेंकें नहीं।<br><span style="color:#92400e;">Do not discard the damaged product before reporting.</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo(3)">← Back</button>
+          <button class="btn-next" onclick="goTo('stepR2')">Next — Form भरें →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP R2: RODENT FORM ─── -->
+      <div class="step-card" id="stepR2">
+        <div class="step-head">
+          <div class="step-badge">📝 Rodent Damage Form</div>
+          <h2>Rodent Damage Report</h2>
+          <span class="hi">सभी जानकारी सही-सही भरें</span>
+        </div>
+        <div class="step-body">
+
+          <!-- Article Info -->
+          <div class="rodent-section-label">📦 Product Details</div>
+
+          <div style="display:flex; gap:10px; align-items:flex-end; margin-bottom:16px;">
+            <div class="form-group" style="flex:1; margin-bottom:0;">
+              <label class="fl">Article No. <span class="req">*</span></label>
+              <input class="field" type="number" id="rArticleNo" placeholder="6–12 digit article number" oninput="rClearErr('rArticleNoErr','rArticleNo')">
+            </div>
+            <button class="verify-article-btn" id="verifyArticleBtn" onclick="verifyRodentArticle()">Verify</button>
+          </div>
+          <div class="err-msg" id="rArticleNoErr"></div>
+          <div id="articleVerifyMsg" style="display:none; font-size:12px; color:var(--success); font-weight:600; margin-bottom:12px; margin-top:-8px;">✓ Article verified</div>
+
+          <div class="form-group">
+            <label class="fl">Serial No. <span class="opt">(optional)</span></label>
+            <input class="field" type="text" id="rSerialNo" placeholder="10–18 characters (if available)">
+            <div class="err-msg" id="rSerialNoErr"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="fl">Product Description <span class="req">*</span></label>
+            <textarea class="field" id="rDescription" rows="3" placeholder="Damaged product की description लिखें (कम से कम 20 characters)" oninput="rClearErr('rDescriptionErr','rDescription')"></textarea>
+            <div class="err-msg" id="rDescriptionErr"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="fl">MRP (₹) <span class="req">*</span></label>
+              <input class="field" type="number" id="rMRP" placeholder="e.g. 199.00" step="0.01" min="0" max="9999.99" oninput="rClearErr('rMRPErr','rMRP')">
+              <div class="err-msg" id="rMRPErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="fl">Net Selling Price (₹) <span class="req">*</span></label>
+              <input class="field" type="number" id="rNetPrice" placeholder="e.g. 149.00" step="0.01" min="0" oninput="rClearErr('rNetPriceErr','rNetPrice')">
+              <div class="err-msg" id="rNetPriceErr"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="fl">MFD Date <span class="req">*</span></label>
+              <input class="field" type="date" id="rMFD" oninput="rClearErr('rMFDErr','rMFD')">
+              <div class="err-msg" id="rMFDErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="fl">EXP Date <span class="req">*</span></label>
+              <input class="field" type="date" id="rEXP" oninput="rClearErr('rEXPErr','rEXP')">
+              <div class="err-msg" id="rEXPErr"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="fl">Current Offer <span class="opt">(optional)</span></label>
+            <input class="field" type="text" id="rCurrentOffer" placeholder="e.g. 10% off, Buy 2 Get 1">
+          </div>
+
+          <hr class="rodent-section-divider">
+
+          <!-- Gap Status -->
+          <div class="rodent-section-label">🔧 Gap / Hole Status</div>
+
+          <div class="form-group">
+            <label class="fl">Gap Status <span class="req">*</span></label>
+            <div class="gap-status-grid">
+              <div class="gap-opt" id="gapClosed" onclick="selectGapStatus('Closed')">✅ Closed<br><span style="font-size:11px; font-weight:400;">Gap बंद हो गया</span></div>
+              <div class="gap-opt" id="gapOpen"   onclick="selectGapStatus('Open')">🔓 Open<br><span style="font-size:11px; font-weight:400;">Gap अभी खुला है</span></div>
+            </div>
+            <div class="err-msg" id="rGapStatusErr"></div>
+          </div>
+
+          <div class="form-group" id="gapClosingDateGroup" style="display:none;">
+            <label class="fl">Gap Closing Date <span class="req">*</span></label>
+            <input class="field" type="date" id="rGapClosingDate" oninput="rClearErr('rGapClosingDateErr','rGapClosingDate')">
+            <div class="err-msg" id="rGapClosingDateErr"></div>
+          </div>
+
+          <hr class="rodent-section-divider">
+
+          <!-- Photos -->
+          <div class="rodent-section-label">📸 Photos — 4 upload करें</div>
+
+          <div class="rodent-photo-grid">
+            <div class="photo-slot">
+              <label class="fl">EXP Date Image <span class="req">*</span></label>
+              <div class="upload-zone" id="ruz1">
+                <input type="file" accept="image/*" capture="environment" id="rph1" onchange="handleRodentPhoto(this,1)">
+                <div class="uz-icon">📷</div>
+                <div class="uz-label">Tap to capture</div>
+                <img class="uz-preview" id="rprev1" alt="">
+                <div class="uz-check">✓</div>
+                <div class="uz-remove" onclick="removeRodentPhoto(1)">✕</div>
+                <div class="uz-change">Change</div>
+              </div>
+            </div>
+            <div class="photo-slot">
+              <label class="fl">Bite Area <span class="req">*</span></label>
+              <div class="upload-zone" id="ruz2">
+                <input type="file" accept="image/*" capture="environment" id="rph2" onchange="handleRodentPhoto(this,2)">
+                <div class="uz-icon">📷</div>
+                <div class="uz-label">Tap to capture</div>
+                <img class="uz-preview" id="rprev2" alt="">
+                <div class="uz-check">✓</div>
+                <div class="uz-remove" onclick="removeRodentPhoto(2)">✕</div>
+                <div class="uz-change">Change</div>
+              </div>
+            </div>
+            <div class="photo-slot">
+              <label class="fl">Gap Before Closing <span class="req">*</span></label>
+              <div class="upload-zone" id="ruz3">
+                <input type="file" accept="image/*" capture="environment" id="rph3" onchange="handleRodentPhoto(this,3)">
+                <div class="uz-icon">📷</div>
+                <div class="uz-label">Tap to capture</div>
+                <img class="uz-preview" id="rprev3" alt="">
+                <div class="uz-check">✓</div>
+                <div class="uz-remove" onclick="removeRodentPhoto(3)">✕</div>
+                <div class="uz-change">Change</div>
+              </div>
+            </div>
+            <div class="photo-slot">
+              <label class="fl">Gap After Closing <span class="opt">(optional)</span></label>
+              <div class="upload-zone" id="ruz4">
+                <input type="file" accept="image/*" capture="environment" id="rph4" onchange="handleRodentPhoto(this,4)">
+                <div class="uz-icon">📷</div>
+                <div class="uz-label">Tap to capture</div>
+                <img class="uz-preview" id="rprev4" alt="">
+                <div class="uz-check">✓</div>
+                <div class="uz-remove" onclick="removeRodentPhoto(4)">✕</div>
+                <div class="uz-change">Change</div>
+              </div>
+            </div>
+          </div>
+          <div class="err-msg" id="rPhotoErr"></div>
+
+          <div class="alert-box" id="rFormErr"></div>
+
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goTo('stepR1')">← Back</button>
+          <button class="btn-next" id="rodentSubmitBtn" onclick="submitRodentComplaint()">Submit Report →</button>
+        </div>
+      </div>
+
     </main>
   </div><!-- /app-body -->
 
@@ -1696,7 +1955,8 @@ const STEPS = [
 // ═══════════════════════════════════════════════
 function goTo(n) {
   document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
-  document.getElementById('step' + n).classList.add('active');
+  const id = (typeof n === 'number') ? 'step' + n : n;
+  document.getElementById(id).classList.add('active');
   S.step = n;
   updateSidebar();
   updateMobileProgress();
@@ -1836,6 +2096,14 @@ async function confirmMainComplaintType() {
   const btn = document.querySelector('#step3 .btn-next');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Loading products...';
+
+  // Rodent path — skip product loading, go directly to instructions
+  if (S.mainComplaintType === 'Rodent Damage/Pest Control') {
+    btn.disabled = false;
+    btn.innerHTML = 'Next →';
+    goTo('stepR1');
+    return;
+  }
 
   if (S.mainComplaintType === 'Other Complaints (Facility)') {
     try {
@@ -2470,7 +2738,223 @@ async function submitComplaint() {
   goTo(13);
 }
 
-// ═════════════════════════════��═════════════════
+// ═══════════════════════════════════════════════
+//  RODENT DAMAGE FORM
+// ═══════════════════════════════════════════════
+const RODENT_SUBMIT_WEBHOOK = 'https://automation.openmindhelpline.com/webhook/form-submit';
+const RODENT_VERIFY_WEBHOOK = 'https://automation.openmindhelpline.com/webhook/Rodent%20Damage%20Form';
+
+let rodentGapStatus = '';
+let rodentArticleVerified = false;
+
+function rClearErr(errId, fieldId) {
+  const err = document.getElementById(errId);
+  if (err) err.classList.remove('show');
+  const fld = document.getElementById(fieldId);
+  if (fld) fld.classList.remove('has-error');
+}
+
+function rShowErr(errId, fieldId, msg) {
+  const err = document.getElementById(errId);
+  if (err) { err.textContent = msg; err.classList.add('show'); }
+  const fld = document.getElementById(fieldId);
+  if (fld) fld.classList.add('has-error');
+}
+
+function selectGapStatus(val) {
+  rodentGapStatus = val;
+  document.getElementById('gapClosed').classList.toggle('sel', val === 'Closed');
+  document.getElementById('gapOpen').classList.toggle('sel', val === 'Open');
+  document.getElementById('rGapStatusErr').classList.remove('show');
+  const dateGroup = document.getElementById('gapClosingDateGroup');
+  dateGroup.style.display = (val === 'Closed') ? 'block' : 'none';
+  if (val === 'Open') document.getElementById('rGapClosingDate').value = '';
+}
+
+async function verifyRodentArticle() {
+  const articleNo = document.getElementById('rArticleNo').value.trim();
+  if (!articleNo) {
+    rShowErr('rArticleNoErr', 'rArticleNo', 'Article number required for verification.');
+    return;
+  }
+  if (!/^\d{6,12}$/.test(articleNo)) {
+    rShowErr('rArticleNoErr', 'rArticleNo', 'Article No. must be 6–12 digits.');
+    return;
+  }
+
+  const btn = document.getElementById('verifyArticleBtn');
+  btn.disabled = true;
+  btn.textContent = '...';
+  const verifyMsg = document.getElementById('articleVerifyMsg');
+  verifyMsg.style.display = 'none';
+  rodentArticleVerified = false;
+
+  try {
+    const res = await fetch(RODENT_VERIFY_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ articleNo, store_id: S.store.code, logId: S.logId })
+    });
+    if (!res.ok) throw new Error('http ' + res.status);
+    rodentArticleVerified = true;
+    verifyMsg.textContent = '✓ Article verified';
+    verifyMsg.style.color = 'var(--success)';
+    verifyMsg.style.display = 'block';
+    rClearErr('rArticleNoErr', 'rArticleNo');
+  } catch (e) {
+    // Soft fail — don't block submission
+    rodentArticleVerified = true;
+    verifyMsg.textContent = '⚠ Could not verify — proceeding anyway';
+    verifyMsg.style.color = 'var(--warn)';
+    verifyMsg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Verify';
+  }
+}
+
+function handleRodentPhoto(input, num) {
+  const file = input.files[0];
+  if (!file) return;
+  const zone    = document.getElementById('ruz' + num);
+  const preview = document.getElementById('rprev' + num);
+  const reader  = new FileReader();
+  reader.onload = e => { preview.src = e.target.result; zone.classList.add('filled'); };
+  reader.readAsDataURL(file);
+  document.getElementById('rPhotoErr').classList.remove('show');
+}
+
+function removeRodentPhoto(num) {
+  const inp     = document.getElementById('rph' + num);
+  const zone    = document.getElementById('ruz' + num);
+  const preview = document.getElementById('rprev' + num);
+  if (inp)     inp.value = '';
+  if (preview) preview.src = '';
+  if (zone)    zone.classList.remove('filled');
+}
+
+function validateRodentForm() {
+  let ok = true;
+
+  const articleNo = document.getElementById('rArticleNo').value.trim();
+  if (!articleNo || !/^\d{6,12}$/.test(articleNo)) {
+    rShowErr('rArticleNoErr', 'rArticleNo', 'Article No. must be 6–12 digits.'); ok = false;
+  }
+
+  const desc = document.getElementById('rDescription').value.trim();
+  if (desc.length < 20) {
+    rShowErr('rDescriptionErr', 'rDescription', 'Description must be at least 20 characters.'); ok = false;
+  }
+
+  const mrp = parseFloat(document.getElementById('rMRP').value);
+  if (isNaN(mrp) || mrp <= 0 || mrp > 9999.99) {
+    rShowErr('rMRPErr', 'rMRP', 'Enter a valid MRP (0.01 – 9999.99).'); ok = false;
+  }
+
+  const nsp = parseFloat(document.getElementById('rNetPrice').value);
+  if (isNaN(nsp) || nsp <= 0) {
+    rShowErr('rNetPriceErr', 'rNetPrice', 'Enter a valid selling price.'); ok = false;
+  }
+
+  if (!document.getElementById('rMFD').value) {
+    rShowErr('rMFDErr', 'rMFD', 'Manufacturing date is required.'); ok = false;
+  }
+
+  if (!document.getElementById('rEXP').value) {
+    rShowErr('rEXPErr', 'rEXP', 'Expiry date is required.'); ok = false;
+  }
+
+  if (!rodentGapStatus) {
+    const ge = document.getElementById('rGapStatusErr');
+    ge.textContent = 'Please select gap status.'; ge.classList.add('show'); ok = false;
+  }
+
+  if (rodentGapStatus === 'Closed' && !document.getElementById('rGapClosingDate').value) {
+    rShowErr('rGapClosingDateErr', 'rGapClosingDate', 'Gap closing date is required.'); ok = false;
+  }
+
+  const ph1 = document.getElementById('rph1');
+  const ph2 = document.getElementById('rph2');
+  const ph3 = document.getElementById('rph3');
+  if (!ph1.files[0] || !ph2.files[0] || !ph3.files[0]) {
+    const pe = document.getElementById('rPhotoErr');
+    pe.textContent = 'Please upload first 3 photos (EXP date, bite area, gap before closing).';
+    pe.classList.add('show'); ok = false;
+  }
+
+  return ok;
+}
+
+async function submitRodentComplaint() {
+  const formErr = document.getElementById('rFormErr');
+  formErr.classList.remove('show');
+
+  if (!validateRodentForm()) {
+    formErr.textContent = 'Please fix the errors above and try again.';
+    formErr.classList.add('show');
+    return;
+  }
+
+  const btn = document.getElementById('rodentSubmitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Submitting...';
+
+  const fd = new FormData();
+  fd.append('employeeId',      S.employee.id   || '');
+  fd.append('employeeName',    S.employee.name || '');
+  fd.append('storeName',       S.store.name    || '');
+  fd.append('storeCode',       S.store.code    || '');
+  fd.append('logId',           S.logId         || '');
+  fd.append('complaintType',   'Rodent Damage/Pest Control');
+  fd.append('articleNo',       document.getElementById('rArticleNo').value.trim());
+  fd.append('serialNo',        document.getElementById('rSerialNo').value.trim());
+  fd.append('description',     document.getElementById('rDescription').value.trim());
+  fd.append('mrp',             document.getElementById('rMRP').value.trim());
+  fd.append('netSellingPrice', document.getElementById('rNetPrice').value.trim());
+  fd.append('mfdDate',         document.getElementById('rMFD').value);
+  fd.append('expDate',         document.getElementById('rEXP').value);
+  fd.append('currentOffer',    document.getElementById('rCurrentOffer').value.trim());
+  fd.append('gapStatus',       rodentGapStatus);
+  fd.append('gapClosingDate',  document.getElementById('rGapClosingDate').value || '');
+
+  const photoLabels = ['expDateImage','biteArea','gapBefore','gapAfter'];
+  [1,2,3,4].forEach((n, i) => {
+    const f = document.getElementById('rph' + n).files[0];
+    if (f) fd.append(photoLabels[i], f, f.name);
+  });
+
+  try {
+    const res = await fetch(RODENT_SUBMIT_WEBHOOK, { method: 'POST', body: fd });
+    if (!res.ok) throw new Error('http ' + res.status);
+    const data = await res.json().catch(() => ({}));
+    const ticket = data.ticketId || data.ticket_id || S.logId || ('VMM-' + Math.random().toString(36).substring(2,7).toUpperCase());
+    document.getElementById('ticketDisplay').textContent = ticket;
+    btn.disabled = false;
+    btn.innerHTML = 'Submit Report →';
+    goTo(13);
+  } catch (e) {
+    btn.disabled = false;
+    btn.innerHTML = 'Submit Report →';
+    formErr.textContent = '❌ Submission failed. Please check your connection and try again.';
+    formErr.classList.add('show');
+  }
+}
+
+function resetRodentForm() {
+  ['rArticleNo','rSerialNo','rDescription','rMRP','rNetPrice','rMFD','rEXP','rCurrentOffer','rGapClosingDate']
+    .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  [1,2,3,4].forEach(removeRodentPhoto);
+  rodentGapStatus = '';
+  rodentArticleVerified = false;
+  document.getElementById('gapClosed').classList.remove('sel');
+  document.getElementById('gapOpen').classList.remove('sel');
+  document.getElementById('gapClosingDateGroup').style.display = 'none';
+  document.getElementById('articleVerifyMsg').style.display = 'none';
+  document.querySelectorAll('#stepR2 .err-msg').forEach(e => e.classList.remove('show'));
+  document.getElementById('rFormErr').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════
 //  HELPERS
 // ═══════════════════════════════════════════════
 function selOpt(el, gridId, key) {
@@ -2505,6 +2989,7 @@ function submitAnother() {
   });
   document.querySelectorAll('.opt-card').forEach(c => c.classList.remove('sel'));
   document.querySelectorAll('.alert-box').forEach(a => a.classList.remove('show'));
+  resetRodentForm();
   goTo(3); // employee already verified — jump straight to complaint type
 }
 
